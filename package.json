@@ -1,0 +1,24 @@
+{
+  "name": "laundrytime",
+  "version": "1.0.0",
+  "description": "Backend API for laundrytime app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdierauf/laundrytime.git"
+  },
+  "author": "Stefan Dierauf",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sdierauf/laundrytime/issues"
+  },
+  "homepage": "https://github.com/sdierauf/laundrytime#readme",
+  "dependencies": {
+    "lowdb": "^0.12.5",
+    "restify": "^4.0.4"
+  }
+}
