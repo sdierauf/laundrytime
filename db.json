@@ -5,6 +5,10 @@
     },
     {
       "id": "1"
+    },
+    {
+      "name": "dumb",
+      "type": "washer"
     }
   ]
 }
