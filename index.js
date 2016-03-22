@@ -52,6 +52,13 @@ getMachine.handler = function(req, res) {
   return res(machine);
 }
 
+var getAllMachines = {};
+getAllMachines.method = 'GET';
+getAllMachines.path = '/machines';
+getAllMachines.handler = function(req, res) {
+  return res(db('machines'));
+}
+
 var postMachine = {};
 postMachine.method = 'POST';
 postMachine.path = '/machines';
@@ -60,15 +67,18 @@ postMachine.handler = function(req, res) {
   var newMachine = {};
   newMachine.name = req.payload.name;
   newMachine.type = req.payload.type;
+  newMachine.queue = [];
   if (!validateMachine(newMachine)) {
     api.log('error', 'Not a valid machine!');
     api.log('error', newMachine);
     return res('Not a valid machine').code(404);
   }
   db('machines').push(newMachine).then(function() {
-    api.log('info', 'added machine', newMachine.name);
+    api.log('info', 'added machine ' + newMachine.name);
   })
-  return res('added machine').code(200);
+  return res({
+    message: 'added machine'
+  }).code(200);
 }
 postMachine.config.validate = {
   payload: {
@@ -77,10 +87,65 @@ postMachine.config.validate = {
   }
 }
 
+var postUser = {};
+postUser.method = 'POST';
+postUser.path = '/user';
+postUser.config = {};
+postUser.handler = function(req, res) {
+  var newUser = {};
+  newUser.name = req.payload.name;
+  db('users').push(newUser).then(function() {
+    api.log('info', 'Added user ' + newUser.name);
+  })
+  return res({
+    message: 'success'
+  }).code(200);
+}
+postUser.config.validate = {
+  payload: {
+    name: Joi.string()
+  }
+}
+
+var getUser = {};
+getUser.method = 'GET';
+getUser.path = '/user/{name}';
+getUser.handler = function(req, res) {
+  return res(db('users').find({name: req.params.name}))
+}
+
+var getQueue = {};
+getQueue.method = 'GET';
+getQueue.path = '/machines/{name}/queue';
+getQueue.handler = function(req, res) {
+  return res({
+    queue: db('machines').find({name: req.params.name}).queue
+  });
+}
+
+var addUserToQueue = {};
+addUserToQueue.method = 'POST';
+addUserToQueue.path = '/machines/{machineName}/queue';
+addUserToQueue.config = {};
+addUserToQueue.handler = function(req, res) {
+
+}
+addUserToQueue.config.validate = {
+  payload: {
+    user: Joi.string(),
+    minutes: Joi.number().integer().min(1).max(90),
+    pin: Joi.number().integer().min(0).max(9999)
+  }
+}
 
 api.route(hello);
 api.route(getMachine);
+api.route(getAllMachines);
 api.route(postMachine);
+api.route(postUser);
+api.route(getUser);
+api.route(getQueue);
+api.route(addUserToQueue);
 
 
 // api.get('/machines/:id', function(req, res, next) {
