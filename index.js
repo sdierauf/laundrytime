@@ -96,10 +96,11 @@ postUser.handler = function(req, res) {
   newUser.name = req.payload.name;
   db('users').push(newUser).then(function() {
     api.log('info', 'Added user ' + newUser.name);
+    return res({
+      message: 'success'
+    }).code(200);
   })
-  return res({
-    message: 'success'
-  }).code(200);
+  
 }
 postUser.config.validate = {
   payload: {
@@ -128,6 +129,29 @@ addUserToQueue.method = 'POST';
 addUserToQueue.path = '/machines/{machineName}/queue';
 addUserToQueue.config = {};
 addUserToQueue.handler = function(req, res) {
+  var machine = db('machines').find({name: req.params.machineName})
+  var user = req.payload.user;
+  if (!machineQueue) {
+    // return error
+    return res({message: 'no machine with that name'}).code(404)
+  }
+  for (var i = 0; i < machine.queue.length; i++) {
+    if (machine.queue[i].user == user) {
+      // return already in queue
+      return res({
+        message: 'already in the queue'
+      }).code(404);
+    }
+  }
+  var queueItem = {
+    user: user,
+    pin: req.payload.pin,
+    minutes: req.payload.minutes
+  }
+  machine.queue.push(queueItem).then(function() {
+    return res().code(200);
+  })
+
 
 }
 addUserToQueue.config.validate = {
