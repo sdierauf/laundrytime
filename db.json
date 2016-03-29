@@ -9,6 +9,27 @@
     {
       "name": "dumb",
       "type": "washer"
+    },
+    {
+      "name": "booty",
+      "type": "washer",
+      "queue": []
+    },
+    {
+      "name": "bubble",
+      "type": "washer",
+      "queue": [
+        {
+          "user": "fuck@mail.com",
+          "pin": 1234,
+          "minutes": 50
+        },
+        {
+          "user": "fuckyou@mail.com",
+          "pin": 1234,
+          "minutes": 50
+        }
+      ]
     }
   ]
 }

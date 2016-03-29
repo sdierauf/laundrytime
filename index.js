@@ -2,15 +2,14 @@
 
 // CONST
 var api_NAME = 'laundrytime';
-var PORT = 8080;
+var PORT = 8000;
 
 
 // Libraries
-var restify = require('restify');
 var Hapi = require('hapi');
 var Joi = require('joi');
 var low = require('lowdb');
-var storage = require('lowdb/file-async');
+var storage = require('lowdb/file-sync');
 var good = require('good');
 
 
@@ -21,16 +20,28 @@ var api = new Hapi.Server();
 
 api.connection({
   host: 'localhost',
-  port: 8000
+  port: PORT
 })
 
+
+//
+// Functions
+//
 
 var validateMachine = function(machine) {
   var machineTypes = ['washer', 'dryer'];
   return machineTypes.indexOf(machine.type) !== -1;
 }
 
-// Routes
+var startJob = function(job) {
+  console.log("Starting job: ", job);
+}
+
+
+//
+// Route Definitions
+//
+
 var hello = {};
 hello.method = 'GET';
 hello.path = '/hello'
@@ -68,14 +79,13 @@ postMachine.handler = function(req, res) {
   newMachine.name = req.payload.name;
   newMachine.type = req.payload.type;
   newMachine.queue = [];
+  newMachine.operational = true;
   if (!validateMachine(newMachine)) {
     api.log('error', 'Not a valid machine!');
     api.log('error', newMachine);
     return res('Not a valid machine').code(404);
   }
-  db('machines').push(newMachine).then(function() {
-    api.log('info', 'added machine ' + newMachine.name);
-  })
+  db('machines').push(newMachine);
   return res({
     message: 'added machine'
   }).code(200);
@@ -87,33 +97,9 @@ postMachine.config.validate = {
   }
 }
 
-var postUser = {};
-postUser.method = 'POST';
-postUser.path = '/user';
-postUser.config = {};
-postUser.handler = function(req, res) {
-  var newUser = {};
-  newUser.name = req.payload.name;
-  db('users').push(newUser).then(function() {
-    api.log('info', 'Added user ' + newUser.name);
-    return res({
-      message: 'success'
-    }).code(200);
-  })
-  
-}
-postUser.config.validate = {
-  payload: {
-    name: Joi.string()
-  }
-}
-
-var getUser = {};
-getUser.method = 'GET';
-getUser.path = '/user/{name}';
-getUser.handler = function(req, res) {
-  return res(db('users').find({name: req.params.name}))
-}
+var reportMachineProblem = {};
+reportMachineProblem.method = 'POST';
+reportMachineProblem.path 
 
 var getQueue = {};
 getQueue.method = 'GET';
@@ -129,12 +115,14 @@ addUserToQueue.method = 'POST';
 addUserToQueue.path = '/machines/{machineName}/queue';
 addUserToQueue.config = {};
 addUserToQueue.handler = function(req, res) {
-  var machine = db('machines').find({name: req.params.machineName})
+  var machine = db('machines').find({name: req.params.machineName});
+  // console.log(machine);
   var user = req.payload.user;
-  if (!machineQueue) {
+  if (!machine) {
     // return error
     return res({message: 'no machine with that name'}).code(404)
   }
+  api.log('info', 'Machine: ' + machine)
   for (var i = 0; i < machine.queue.length; i++) {
     if (machine.queue[i].user == user) {
       // return already in queue
@@ -148,28 +136,71 @@ addUserToQueue.handler = function(req, res) {
     pin: req.payload.pin,
     minutes: req.payload.minutes
   }
-  machine.queue.push(queueItem).then(function() {
-    return res().code(200);
-  })
-
-
+  machine.queue.push(queueItem);
+  return res(machine).code(200);
+  
 }
+
 addUserToQueue.config.validate = {
   payload: {
-    user: Joi.string(),
+    user: Joi.string().email(),
     minutes: Joi.number().integer().min(1).max(90),
     pin: Joi.number().integer().min(0).max(9999)
   }
 }
 
+var dequeueAndRunJob = {};
+dequeueAndRunJob.method = 'POST';
+dequeueAndRunJob.path = '/machines/{machineName}/queue/start';
+dequeueAndRunJob.config = {};
+dequeueAndRunJob.handler = function(req, res) {
+  if (req.payload.command != "next") {
+    return res({message: "incorrect command"}).code(404);
+  }
+  // get queue
+  var machine = db('machines').find({name: req.params.machineName});
+  if (!machine) {
+    return res({message: "machine not found"}).code(404)
+  }
+  var queue = machine.queue;
+  // check if empty
+  if (queue.length == 0) {
+    return res({message: "queue empty"}).code(404);
+  }
+  // if not, start a timer, pop queue, and return 200,
+  var job = queue[0];
+  if (req.payload.pin != job.pin) {
+    return res({message: "PIN was incorrect"}).code(404);
+  }
+  if (req.payload.minutes > 0) {
+    job.minutes = req.payload.minutes;
+  }
+  queue.shift();
+  startJob(job);
+  return res(job).code(200);
+}
+
+dequeueAndRunJob.config.validate = {
+  payload: {
+    command: Joi.string(),
+    pin: Joi.number().integer().min(0).max(9999),
+    minutes: Joi.number().integer().min(0).max(200)
+  }
+}
+
+// delete from queue
+// report problem
+// email integration
+// phone integration?
+
+
 api.route(hello);
 api.route(getMachine);
 api.route(getAllMachines);
 api.route(postMachine);
-api.route(postUser);
-api.route(getUser);
 api.route(getQueue);
 api.route(addUserToQueue);
+api.route(dequeueAndRunJob);
 
 
 // api.get('/machines/:id', function(req, res, next) {
