@@ -81,6 +81,7 @@ postMachine.handler = function(req, res) {
   newMachine.type = req.payload.type;
   newMachine.queue = [];
   newMachine.operational = true;
+  newMachine.problemMessage = "";
   if (!validateMachine(newMachine)) {
     api.log('error', 'Not a valid machine!');
     api.log('error', newMachine);
@@ -98,9 +99,9 @@ postMachine.config.validate = {
   }
 }
 
-var reportMachineProblem = {};
-reportMachineProblem.method = 'POST';
-reportMachineProblem.path 
+// var reportMachineProblem = {};
+// reportMachineProblem.method = 'POST';
+// reportMachineProblem.path 
 
 var getQueue = {};
 getQueue.method = 'GET';
@@ -211,9 +212,8 @@ deleteFromQueue.handler = function(req, res) {
   if (found.pin != req.payload.pin) {
     return res({message: 'incorrect pin'}).code(404);
   }
-  queue.slice(itemIndex, 1);
-  return res()
-
+  var deleted = queue.slice(itemIndex, 1);
+  return res(deleted).code(200);
 };
 deleteFromQueue.config.validate = {
   payload: {
@@ -225,7 +225,30 @@ deleteFromQueue.config.validate = {
 
 
 // report problem
+var reportProblem = {};
+reportProblem.method = 'POST';
+reportProblem.path = '/machines/{machineName}/report';
+reportProblem.config = {};
+reportProblem.handler(req, res) {
+  var machine = db('machines').find({name: req.params.machineName});
+  if (!machine) {
+    return res({message: 'machine not found'}).code(404);
+  }
+  machine.operational = false;
+  machine.problemMessage = req.payload.message;
+  return res(machine).code(200);
+}
+reportProblem.config.validate = {
+  payload: {
+    message: Joi.string()
+  }
+}
+
+// to get the current problem, just get the machine, then res.problemMessage;
+
+
 // email integration
+
 // phone integration?
 
 
