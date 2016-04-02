@@ -217,7 +217,7 @@ deleteFromQueue.handler = function(req, res) {
 };
 deleteFromQueue.config.validate = {
   payload: {
-    user: Joi.string().email,
+    user: Joi.string().email(),
     pin: Joi.number().integer().min(0).max(9999)
   }
 }
@@ -260,6 +260,7 @@ api.route(getQueue);
 api.route(addUserToQueue);
 api.route(dequeueAndRunJob);
 api.route(deleteFromQueue);
+api.route(reportProblem);
 
 
 // api.get('/machines/:id', function(req, res, next) {
