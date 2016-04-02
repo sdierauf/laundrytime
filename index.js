@@ -11,6 +11,7 @@ var Joi = require('joi');
 var low = require('lowdb');
 var storage = require('lowdb/file-sync');
 var good = require('good');
+var _ = require('lodash');
 
 
 var db = low('db.json', { storage })
@@ -189,6 +190,40 @@ dequeueAndRunJob.config.validate = {
 }
 
 // delete from queue
+var deleteFromQueue = {};
+deleteFromQueue.method = 'POST';
+deleteFromQueue.path = '/machines/{machineName}/queue/delete';
+deleteFromQueue.config = {};
+deleteFromQueue.handler = function(req, res) {
+  var machine = db('machines').find({name: req.params.machineName});
+  if (!machine) {
+    return res({message: 'machine not found'}).code(404);
+  }
+  var queue = machine.queue;
+  if (queue.length == 0) {
+    return res({message: 'queue empty'}).code(404);
+  }
+  var itemIndex = _.findIndex(queue, ['user', req.payload.user]);
+  if (itemIndex < 0) {
+    return res({message: 'user not found'}).code(404);
+  }
+  var found = queue[itemIndex];
+  if (found.pin != req.payload.pin) {
+    return res({message: 'incorrect pin'}).code(404);
+  }
+  queue.slice(itemIndex, 1);
+  return res()
+
+};
+deleteFromQueue.config.validate = {
+  payload: {
+    user: Joi.string().email,
+    pin: Joi.number().integer().min(0).max(9999)
+  }
+}
+
+
+
 // report problem
 // email integration
 // phone integration?
@@ -201,6 +236,7 @@ api.route(postMachine);
 api.route(getQueue);
 api.route(addUserToQueue);
 api.route(dequeueAndRunJob);
+api.route(deleteFromQueue);
 
 
 // api.get('/machines/:id', function(req, res, next) {
