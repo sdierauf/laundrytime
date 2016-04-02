@@ -229,7 +229,7 @@ var reportProblem = {};
 reportProblem.method = 'POST';
 reportProblem.path = '/machines/{machineName}/report';
 reportProblem.config = {};
-reportProblem.handler(req, res) {
+reportProblem.handler = function(req, res) {
   var machine = db('machines').find({name: req.params.machineName});
   if (!machine) {
     return res({message: 'machine not found'}).code(404);
