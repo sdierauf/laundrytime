@@ -4,6 +4,10 @@
 var api_NAME = 'laundrytime';
 var PORT = 8000;
 
+var mailgun_APIKEY = 'key-131c8b8ac0a1d756922a45c49cc3f3ef';
+var mailgun_DOMAIN = 'sandbox23ba88b23b6e4abd8d6e14b0d52572bc.mailgun.org';
+
+
 
 // Libraries
 var Hapi = require('hapi');
@@ -12,8 +16,12 @@ var low = require('lowdb');
 var storage = require('lowdb/file-sync');
 var good = require('good');
 var _ = require('lodash');
+var Mailgun = require('mailgun-js')({apiKey: mailgun_APIKEY, domain: mailgun_DOMAIN});
 
 
+
+
+// Server props
 var db = low('db.json', { storage })
 
 // Set up api
@@ -24,6 +32,7 @@ api.connection({
   port: PORT
 })
 
+var activeJobs = [];
 
 //
 // Functions
@@ -34,9 +43,68 @@ var validateMachine = function(machine) {
   return machineTypes.indexOf(machine.type) !== -1;
 }
 
-var startJob = function(job) {
-  console.log("Starting job: ", job);
+// Curried email builder so intermediate state can be saved;
+var buildEmail = function(src) { 
+  return function(dest) {
+    return function(subj) {
+      return function (msg) {
+        return {
+          from: src,
+          to: dest,
+          subject: subj,
+          text: msg
+        }
+      }
+    }
+  }
 }
+
+var finishJob = function(job) {
+  var finishedMail = job.mailForUserPartial("Job finished")("Your LaundryTime job has finished.");
+  Mailgun.messages().send(finishedMail, function(error, body) {
+    if (error) {
+      api.log('error', error);
+    }
+    api.log('info', body);
+  });
+  db(job.machineName).activeJob = {};
+}
+
+var scheduleJob = function(job) {
+  for (var i = 0; i < activeJobs.length; i++) {
+    if (activeJobs[i].name == job.machineName) {
+      activeJobs.splice(i, 1);
+    }
+  }
+  if (job.minues == 0) {
+    finishJob(job);
+    return;
+  }
+  db(job.machineName).activeJob = job;
+  var timeout = setTimeout(1000 * 60, function() {
+    job.minutes = job.minutes - 1;
+    scheduleJob(job);
+  });
+  activeJobs.push({name: job.machineName, timeoutObj: timeout});
+}
+
+
+var startJob = function(job) {
+  api.log('info', 'starting job' + job);
+  // start schedule
+  // send mail
+  var mailForUserPartial = buildEmail("noreply <laundrytime-admin@" + mailgun_DOMAIN)(job.user)
+  job.mailPartial = mailForUserPartial;
+  scheduleJob(job)
+  var startedMail = job.mailPartial("Job started")("Your LaundryTime job has been started.");
+  Mailgun.messages().send(startedMail, function(error, body) {
+    if (error) {
+      api.log('error', error);
+    }
+    api.log('info', body);
+  })
+}
+
 
 
 //
@@ -82,6 +150,7 @@ postMachine.handler = function(req, res) {
   newMachine.queue = [];
   newMachine.operational = true;
   newMachine.problemMessage = "";
+  newMachine.activeJob = {};
   if (!validateMachine(newMachine)) {
     api.log('error', 'Not a valid machine!');
     api.log('error', newMachine);
@@ -136,7 +205,8 @@ addUserToQueue.handler = function(req, res) {
   var queueItem = {
     user: user,
     pin: req.payload.pin,
-    minutes: req.payload.minutes
+    minutes: req.payload.minutes,
+    machineName: req.params.machineName
   }
   machine.queue.push(queueItem);
   return res(machine).code(200);
