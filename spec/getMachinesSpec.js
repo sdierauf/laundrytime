@@ -12,16 +12,14 @@ try {
 var server = require('../server.js').createServer(8000, 'testdb.json');
 
 var addTestMachine = function(name) {
-  var options = {
-    method: 'POST',
-    url: '/machines',
-    payload: {
-      name: name,
-      type: 'washer'
-    }
-  }
-
-  server.inject(options, function(res) {});
+  var newMachine = {};
+  newMachine.name = name;
+  newMachine.type = 'washer';
+  newMachine.queue = [];
+  newMachine.operational = true;
+  newMachine.problemMessage = "";
+  newMachine.activeJob = {};  
+  server.db('machines').push(newMachine);
 }
 
 describe('machinezz', function() {
@@ -45,6 +43,8 @@ describe('machinezz', function() {
     })
   });
 
+
+
   it('should get all machines', function(done) {
     var name = 'testMachine';
     var name2 = 'anotherMachine';
@@ -59,12 +59,62 @@ describe('machinezz', function() {
     server.inject(options, function(res) {
       expect(res.statusCode).toBe(200);
       var p = JSON.parse(res.payload);
-      console.log(p);
-      var machines = res.payload.machines;
+      // check p has test and anotherMachine
       done();
-    })
-  })
+    });
+  });
 
+
+  it('should get one machine', function(done) {
+    var name = 'sweetTestMachine';
+    addTestMachine(name);
+
+    var options = {
+      method: 'GET',
+      url: '/machines/'+name
+    };
+
+    server.inject(options, function(res) {
+      expect(res.statusCode).toBe(200);
+      var p = JSON.parse(res.payload);
+      expect(p.name).toBe(name);
+      done();
+    });
+
+  });
+
+  it('should add a job the queue then th queue should have the person', function(done) {
+    addTestMachine('queueTest');
+    var addOptions = {
+      method: 'POST',
+      url: '/machines/queueTest/queue',
+      payload: {
+        user: 'test@mail.com',
+        pin: 1234,
+        minutes: 50
+      }
+    };
+
+    server.inject(addOptions, function(res) {
+      expect(res.statusCode).toBe(200);
+      var p = JSON.parse(res.payload);
+      expect(p.name).toBe('queueTest');
+
+      var getQueue = {
+        method: 'GET',
+        url: '/machines/queueTest/queue'
+      };
+      server.inject(getQueue, function(newRes) {
+        expect(newRes.statusCode).toBe(200);
+        var q = JSON.parse(newRes.payload);
+        console.log(q);
+        expect(q.queue[0].user).toBe('test@mail.com');
+        expect(q.queue[0].pin).toBe(1234);
+        done();
+      })
+    })
+
+  })
 
 
 });

@@ -21,6 +21,7 @@ var createServer = function(port, dbName) {
   // Set up api
   var api = new Hapi.Server();
 
+  api.db = db;
   api.connection({
     host: 'localhost',
     port: port

@@ -23,6 +23,29 @@
       "operational": true,
       "problemMessage": "",
       "activeJob": {}
+    },
+    {
+      "name": "sweetTestMachine",
+      "type": "washer",
+      "queue": [],
+      "operational": true,
+      "problemMessage": "",
+      "activeJob": {}
+    },
+    {
+      "name": "queueTest",
+      "type": "washer",
+      "queue": [
+        {
+          "user": "test@mail.com",
+          "pin": 1234,
+          "minutes": 50,
+          "machineName": "queueTest"
+        }
+      ],
+      "operational": true,
+      "problemMessage": "",
+      "activeJob": {}
     }
   ]
 }
