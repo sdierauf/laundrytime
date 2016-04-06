@@ -99,7 +99,6 @@ describe('machinezz', function() {
       expect(res.statusCode).toBe(200);
       var p = JSON.parse(res.payload);
       expect(p.name).toBe('queueTest');
-
       var getQueue = {
         method: 'GET',
         url: '/machines/queueTest/queue'
@@ -113,8 +112,32 @@ describe('machinezz', function() {
         done();
       })
     })
+  });
+
+  it('should delete a job from the queue', function(done) {
+    addTestMachine('anotherQueue');
+    var addOptions = {
+      method: 'POST',
+      url: '/machines/anotherQueue/queue',
+      payload: {
+        user: 'test@mail.com',
+        pin: 1235,
+        minutes: 50
+      }
+    };
+    server.inject(addOptions, function(res) {
+      var deleteOptions = addOptions;
+      deleteOptions.path = '/machines/anotherQueue/queue/delete';
+      deleteOptions.payload = {
+        user: addOptions.payload.user,
+        pin: addOptions.payload.pin
+      }
+      server.inject(deleteOptions, function(r) {
+        expect(r.responseCode).toBe(200);
+        done();
+      })
+    })
 
   })
-
 
 });

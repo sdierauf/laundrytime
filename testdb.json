@@ -46,6 +46,21 @@
       "operational": true,
       "problemMessage": "",
       "activeJob": {}
+    },
+    {
+      "name": "anotherQueue",
+      "type": "washer",
+      "queue": [
+        {
+          "user": "test@mail.com",
+          "pin": 1235,
+          "minutes": 50,
+          "machineName": "anotherQueue"
+        }
+      ],
+      "operational": true,
+      "problemMessage": "",
+      "activeJob": {}
     }
   ]
 }
