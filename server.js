@@ -27,6 +27,22 @@ var createServer = function(port, dbName) {
     port: port
   })
 
+
+  api.register(require('inert'), (err) => {
+    api.route({
+      method: 'GET',
+      path: '/{param*}',
+      handler: {
+          directory: {
+              path: 'app'
+            }
+        }
+    });
+  });
+
+  // serve app/
+  
+
   var activeJobs = {};
 
   //

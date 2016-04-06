@@ -1,0 +1,23 @@
+/* Residence title */
+.topBackground {
+	background: linear-gradient(#60DAEB, #F7FDFF);
+}
+
+.topBackground h1 {
+	color: #35404f;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 86px;
+	font-style: oblique;
+}
+
+/* Report modal CSS */
+#reportModal .modal-header, h4, .close {
+      background-color: red;
+      color:white !important;
+      text-align: center;
+      font-size: 28px;
+  }
+
+#reportModal .modal-footer {
+  background-color: #f9f9f9;
+}

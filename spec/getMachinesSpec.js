@@ -127,13 +127,14 @@ describe('ALL THE TESTS LOL', function() {
     };
     server.inject(addOptions, function(res) {
       var deleteOptions = addOptions;
-      deleteOptions.path = '/machines/anotherQueue/queue/delete';
+      deleteOptions.url = '/machines/anotherQueue/queue/delete';
       deleteOptions.payload = {
         user: addOptions.payload.user,
         pin: addOptions.payload.pin
       }
       server.inject(deleteOptions, function(r) {
         expect(r.statusCode).toBe(200);
+        console.log(JSON.parse(r.payload));
         done();
       })
     })
