@@ -23,7 +23,7 @@ var createServer = function(port, dbName) {
 
   api.db = db;
   api.connection({
-    host: 'localhost',
+    host: '0.0.0.0',
     port: port
   })
 
