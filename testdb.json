@@ -61,6 +61,14 @@
       "operational": true,
       "problemMessage": "",
       "activeJob": {}
+    },
+    {
+      "name": "activeQueue",
+      "type": "washer",
+      "queue": [],
+      "operational": true,
+      "problemMessage": "",
+      "activeJob": {}
     }
   ]
 }

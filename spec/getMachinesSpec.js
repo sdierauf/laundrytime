@@ -22,7 +22,7 @@ var addTestMachine = function(name) {
   server.db('machines').push(newMachine);
 }
 
-describe('machinezz', function() {
+describe('ALL THE TESTS LOL', function() {
 
   it('should add a machine', function(done) {
     var options = {
@@ -133,11 +133,40 @@ describe('machinezz', function() {
         pin: addOptions.payload.pin
       }
       server.inject(deleteOptions, function(r) {
-        expect(r.responseCode).toBe(200);
+        expect(r.statusCode).toBe(200);
         done();
       })
     })
 
   })
+
+  it('should add a job to the active queue', function(done) {
+    addTestMachine('activeQueue');
+    var addOptions = {
+      method: 'POST',
+      url: '/machines/activeQueue/queue',
+      payload: {
+        user: 'test@mail.com',
+        pin: 1235,
+        minutes: 50
+      }
+    };
+    server.inject(addOptions, function(r) {
+      var runJobOptions = {
+        method: 'POST',
+        url: '/machines/activeQueue/queue/start',
+        payload: {
+          command: 'next',
+          pin: 1235,
+          minutes: 0
+        }
+      };
+      server.inject(runJobOptions, function(res) {
+        expect(res.statusCode).toBe(200);
+        done();
+      })
+    })
+
+  });
 
 });
