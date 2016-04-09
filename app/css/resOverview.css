@@ -10,14 +10,38 @@
 	font-style: oblique;
 }
 
-/* Report modal CSS */
-#reportModal .modal-header, h4, .close {
-      background-color: red;
+/* Modals */
+.modal-footer {
+  background-color: #f9f9f9;
+}
+
+/* Line modal */
+#LineModal h4, .close {
       color:white !important;
       text-align: center;
       font-size: 28px;
   }
 
-#reportModal .modal-footer {
-  background-color: #f9f9f9;
+#LineHeader {
+  background-color: green;
+
 }
+
+/* Report modal */
+#reportModal h4, .close {
+      color:white !important;
+      text-align: center;
+      font-size: 28px;
+  }
+
+#reportHeader {
+  background-color: red;
+}
+
+/* Queue table */
+#queueTable button{
+  padding: 0; 
+  border: none;
+  background: none;
+}
+
