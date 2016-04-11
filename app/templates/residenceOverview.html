@@ -145,13 +145,19 @@ right now, so I'll check it later on -->
           </div>
           <!-- Body -->
           <div class="modal-body" style="padding:35px 50px;">
+           <form>
           	<!-- inputEmail -->
               <div class="form-group">
+                <!-- email -->
                 <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email</label>
                 <input type="text" class="form-control" id="usrname" placeholder="Enter email"
                 ng-model="userInfo.email" ng-change="saveUserCookies()">
                 <center><p> We will send you an email when it's your turn. </p></center>
+                <!-- PIN -->
+                <label for="pin"><span class="glyphicon glyphicon-lock"></span> PIN</label>
+                <input type="password" class="form-control" inputmode="numeric" maxlength="4"></input>
               </div>
+           </form>
           </div>
           <!-- Footer -->
           <div class="modal-footer">
