@@ -71,6 +71,7 @@ var createServer = function(port, dbName) {
   }
 
   var finishJob = function(job) {
+    api.log('info', 'finishing job: ' + job);
     var finishedMail = job.mailForUserPartial("Job finished")("Your LaundryTime job has finished.");
     Mailgun.messages().send(finishedMail, function(error, body) {
       if (error) {
@@ -79,9 +80,11 @@ var createServer = function(port, dbName) {
       api.log('info', body);
     });
     db(job.machineName).activeJob = {};
+    api.log('info', 'finished job ' + job);
   }
 
   var scheduleJob = function(job) {
+    api.log('info', 'scheduling job: ' + job);
     activeJobs[job.machineName] = {}
     if (job.minues == 0) {
       finishJob(job);
@@ -89,6 +92,7 @@ var createServer = function(port, dbName) {
     }
     db('machines').find({name: job.machineName}).activeJob = job;
     var timeout = setTimeout(1000 * 60, function() {
+      api.log('info', 'counting down job: ' + job + ' by one minute');
       job.minutes = job.minutes - 1;
       scheduleJob(job);
     });
@@ -109,6 +113,7 @@ var createServer = function(port, dbName) {
         api.log('error', error);
       }
       api.log('info', body);
+      api.log('info', 'mail sent maybe');
     })
   }
 
@@ -349,6 +354,13 @@ var createServer = function(port, dbName) {
 
   // email integration
 
+  var testEmail = {};
+  testEmail.method = 'GET';
+  testEmail.path = '/test/email';
+  testEmail.handler = function(req, res) {
+
+  }
+
   // phone integration?
 
 
@@ -363,6 +375,7 @@ var createServer = function(port, dbName) {
   api.route(reportProblem);
   api.route(deleteCurrentActiveJob);
   api.route(getCurrentActiveJob);
+  api.route(testEmail);
 
 
   // api.get('/machines/:id', function(req, res, next) {
