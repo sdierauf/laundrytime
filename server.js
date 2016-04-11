@@ -159,6 +159,7 @@ var createServer = function(port, dbName) {
     var newMachine = {};
     newMachine.name = req.payload.name;
     newMachine.type = req.payload.type;
+    newMachine.location = 
     newMachine.queue = [];
     newMachine.operational = true;
     newMachine.problemMessage = "";

@@ -1,0 +1,113 @@
+<div class="modalClass" ng-controller="modalCtrl">
+ 
+  <!-- Report Modal  -->
+  <div id="reportModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Content -->
+        <div class="modal-content" >
+          <!-- Header -->
+          <div id="reportHeader" class="modal-header" style="padding:15px 30px;">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Report Problem</h4>
+          </div>
+          <!-- Body -->
+          <div class="modal-body" style="padding:35px 50px;">
+            <form role="form">
+              <!-- inputEmail -->
+              <div class="form-group">
+                <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email</label>
+                <input type="text" class="form-control" id="usrname" placeholder="Enter email">
+              </div>
+              <!-- problemSelector -->
+              <div class="form-group">
+                <label for="problem"><span class="glyphicon glyphicon-cog"></span> Problem </label>
+                <select class="form-control" name="problemsSelect" ng-model="reportSelector.selected" ng-Change="reportModSelChanged()">
+                  <option value="1"> The machine doesn't work. </option>
+                  <option value="2"> Someone has stolen the whaser. </option>
+                  <option value="3"> There is a monster staring at me. </option>
+                  <option value="4"> I'm just bored. </option>
+                  <option value="5"> Other... </option>
+                </select>
+              </div>
+              <!-- textInput -->
+              <div class="form-group" ng-show="reportSelector.show">
+                <label for="problemDescription"> Which is the problem? </label>
+                <input type="text" class="form-control" 
+                name="problemDescriptionText" ng-model="reportSelector.description">
+              </div>
+            </form>
+          </div>
+          <!-- Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" ng-click="report()">Report</button>
+            <button type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+        <!-- endModalContent -->
+      </div>
+    </div> <!-- endReportModal -->
+    <!-- testing stuff -->
+
+    <!-- Get in Line modal -->
+    <div id="LineModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Content -->
+        <div class="modal-content" >
+          <!-- Header -->
+          <div id="LineHeader" class="modal-header" style="padding:15px 30px;">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Queue</h4>
+          </div>
+          <!-- Body -->
+          <div class="modal-body" style="padding:5px 10px;">
+            	<div id="queueTable">
+            	<table class="table table-striped">
+				    <thead>
+				      <tr>
+				        <th>Username</th>
+				        <th>Estimated wait</th>
+				        <th>Email</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td>Darth Vader</td>
+				        <td>Whashing...</td>
+				        <td>iamthedarkness@darkside.evil</td>
+				        <td><button>&#10006;</button></td>
+				      </tr>
+				      <tr>
+				        <td>Snoopy</td>
+				        <td>40 min.</td>
+				        <td>*****</td>
+				        <td><button>&#10006;</button></td>
+				      </tr>
+				      <tr>
+				        <td>Jack Sparrow</td>
+				        <td>Infinity</td>
+				        <td>I_Me_and_Myself@blackpearl</td>
+				        <td><button>&#10006;</button></td>
+				      </tr>
+				      <tr>
+				      	<td>You</td>
+				      	<td>Someday</td>
+				      	<td>youremail@example.com</td>
+				      	<td><button>&#10006;</button></td>
+				      </tr>
+				    </tbody>
+				</table>
+				</div>
+          </div>
+          <!-- Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" ng-click="close()" data-dismiss="modal"> Ok </button>
+          </div>
+        </div>
+        <!-- endModalContent -->
+      </div>
+    </div> <!-- endReportModal -->
+    {{reportSelector.selected + "" + reportSelector.description}}
+  
+  </div> <!-- endModalsDiv -->
+
+</div> <!-- endResiDiv -->

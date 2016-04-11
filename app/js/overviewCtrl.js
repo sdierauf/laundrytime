@@ -15,7 +15,7 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams) {
 
 	$scope.getAllMachines = function() {
 		var xmlHttp = new XMLHttpRequest()
-		xmlHttp.open( "GET", "http://0.0.0.0/machines/", true ) //Async set to false
+		xmlHttp.open( "GET", "/machines", true ) //Async set to false
 
 		xmlHttp.send()
 		var all_machines = xmlHttp.responseText
@@ -25,19 +25,27 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams) {
 		return all_machines
 	}
 
+	var setCurrentMachines = function(data){
+		$scope.currentMachines = []
+		for(machine in data){
+			console.log(machine)
+			if(machine['name'] == $scope.currentResName){
+				console.log("yes")
+				$scope.currentMachines.append(machine)
+			}
+		}
+		console.log($scope.currentMachines)
+	}
+
 	$scope.getAllMachinesFromResidence = function() {
 		var xmlHttp = new XMLHttpRequest()
-		xmlHttp.open( "GET", "localhost:8080/machines/", true ) //Async set to false
+		xmlHttp.open( "GET", "/machines", true ) //Async set to false
 
 		xmlHttp.send()
 		var all_machines = xmlHttp.responseText
 
 		var ret_machines = []
-		for(machine in all_machines){
-			if(machine["name"] == $scope.currentResName){
-				ret_machines.append(machine)
-			}
-		}
+		$.get("/machines", setCurrentMachines, "json");	
 		return ret_machines
 	}
 

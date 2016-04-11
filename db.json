@@ -1,35 +1,69 @@
 {
   "machines": [
     {
-      "id": "1"
-    },
-    {
-      "id": "1"
-    },
-    {
-      "name": "dumb",
-      "type": "washer"
-    },
-    {
-      "name": "booty",
+      "name": "Machine 1",
       "type": "washer",
-      "queue": []
+      "queue": [],
+      "location": "farsta"
+    },
+    {
+      "name": "Machine 2i",
+      "type": "washer",
+      "queue": [],
+      "location": "farsta"
     },
     {
       "name": "bubble",
       "type": "washer",
-      "queue": [
-        {
-          "user": "fuck@mail.com",
-          "pin": 1234,
-          "minutes": 50
-        },
-        {
-          "user": "fuckyou@mail.com",
-          "pin": 1234,
-          "minutes": 50
-        }
-      ]
+      "queue": []
+    },
+    {
+      "name": "Machine 1",
+      "type": "washer",
+      "queue": [],
+      "location": "bjorksatra"
+    },
+    {
+      "name": "Machine 2i",
+      "type": "washer",
+      "queue": [],
+      "location": "bjorksatra"
+    },
+    {
+      "name": "Machine 1",
+      "type": "washer",
+      "queue": [],
+      "location": "tyreso"
+    },
+    {
+      "name": "Machine 2i",
+      "type": "washer",
+      "queue": [],
+      "location": "tyreso"
+    },
+    {
+      "name": "Washing Machine 1",
+      "type": "washer",
+      "queue": [],
+      "location": "lappis"
+    },
+    {
+      "name": "Washing Machine 2",
+      "type": "washer",
+      "queue": [],
+      "location": "lappis"
+    },
+    {
+      "name": "Drying Machine 1",
+      "type": "dryer",
+      "queue": [],
+      "location": "lappis"
+    },
+    {
+      "name": "Drying Machine 2i",
+      "type": "dryer",
+      "queue": [],
+      "location": "lappis"
     }
   ]
 }
