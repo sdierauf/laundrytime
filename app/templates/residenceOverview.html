@@ -30,7 +30,7 @@
       </div>
       <div class="row">
         <button class="btn btn-success" style="width: 100%"
-        data-toggle="modal" data-target="#LineModal">Get in line</button>
+        data-toggle="modal" data-target="#LoginModal">Get in line</button>
       </div>
       <div class="row">
         <button class="btn btn-danger" style="width: 100%" 
@@ -59,7 +59,7 @@
       </div>
       <div class="row">
         <button class="btn btn-success" style="width: 100%"
-        data-toggle="modal" data-target="#LineModal">Get in line</button>
+        data-toggle="modal" data-target="#LoginModal">Get in line</button>
       </div>
       <div class="row">
         <button class="btn btn-danger" style="width: 100%" 
@@ -68,9 +68,19 @@
     </div>
   </div>
 
+  <div class="test" ng-controller="modalCtrl">
+    <p>{{"Topic selected: " + reportSelector.selected}}</p>
+    <p>{{"Description problem: " + reportSelector.description}}</p>
+    <p>{{"User email: " + userInfo.email }}</p>
+  </div>
+
+</div> <!-- endResiDiv -->
+
+
+
 <!-- MODALS -->
 <!-- Ger: I wanna move this modals to other html file, and to use angularjs to 
-display them by ng-click & ng-inglude, unfortunately, I don't know how to do it
+display them, unfortunately, I don't know how to do it
 right now, so I'll check it later on --> 
 
 <div class="modalClass" ng-controller="modalCtrl">
@@ -82,7 +92,6 @@ right now, so I'll check it later on -->
         <div class="modal-content" >
           <!-- Header -->
           <div id="reportHeader" class="modal-header" style="padding:15px 30px;">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Report Problem</h4>
           </div>
           <!-- Body -->
@@ -91,7 +100,8 @@ right now, so I'll check it later on -->
               <!-- inputEmail -->
               <div class="form-group">
                 <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email</label>
-                <input type="text" class="form-control" id="usrname" placeholder="Enter email">
+                <input type="text" class="form-control" id="usrname" placeholder="Enter email"
+                ng-model="userInfo.email" ng-change="saveUserCookies()">
               </div>
               <!-- problemSelector -->
               <div class="form-group">
@@ -114,14 +124,44 @@ right now, so I'll check it later on -->
           </div>
           <!-- Footer -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" ng-click="report()">Report</button>
-            <button type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" style="width: 20%">Report</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" 
+            style="width: 20%">Close</button>
           </div>
         </div>
         <!-- endModalContent -->
       </div>
     </div> <!-- endReportModal -->
     <!-- testing stuff -->
+
+    <!-- Log in Modal -->
+    <div id="LoginModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Content -->
+        <div class="modal-content" >
+          <!-- Header -->
+          <div id="LoginModalHeader" class="modal-header" style="padding:15px 30px;">
+            <h4 class="modal-title">Small Step</h4>
+          </div>
+          <!-- Body -->
+          <div class="modal-body" style="padding:35px 50px;">
+          	<!-- inputEmail -->
+              <div class="form-group">
+                <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email</label>
+                <input type="text" class="form-control" id="usrname" placeholder="Enter email"
+                ng-model="userInfo.email" ng-change="saveUserCookies()">
+                <center><p> We will send you an email when it's your turn. </p></center>
+              </div>
+          </div>
+          <!-- Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" style="width: 20%" 
+            data-dismiss="modal" data-toggle="modal" data-target="#LineModal"> Ok </button>
+          </div>
+        </div>
+        <!-- endModalContent -->
+      </div>
+    </div> <!-- endReportModal -->
 
     <!-- Get in Line modal -->
     <div id="LineModal" class="modal fade" role="dialog">
@@ -130,7 +170,6 @@ right now, so I'll check it later on -->
         <div class="modal-content" >
           <!-- Header -->
           <div id="LineHeader" class="modal-header" style="padding:15px 30px;">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Queue</h4>
           </div>
           <!-- Body -->
@@ -175,14 +214,13 @@ right now, so I'll check it later on -->
           </div>
           <!-- Footer -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" ng-click="close()" data-dismiss="modal"> Ok </button>
+            <button type="button" class="btn btn-success" data-dismiss="modal"
+            style="width: 20%"> Ok </button>
           </div>
         </div>
         <!-- endModalContent -->
       </div>
-    </div> <!-- endReportModal -->
-    {{reportSelector.selected + "" + reportSelector.description}}
-  
-  </div> <!-- endModalsDiv -->
+    </div>  
 
-</div> <!-- endResiDiv -->
+</div> <!-- endModalsDiv -->
+
