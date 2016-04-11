@@ -15,7 +15,7 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams) {
 
 	$scope.getAllMachines = function() {
 		var xmlHttp = new XMLHttpRequest()
-		xmlHttp.open( "GET", "localhost:8080/machines/", true ) //Async set to false
+		xmlHttp.open( "GET", "http://0.0.0.0/machines/", true ) //Async set to false
 
 		xmlHttp.send()
 		var all_machines = xmlHttp.responseText

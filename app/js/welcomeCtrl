@@ -1,0 +1,6 @@
+
+
+laundryTimeApp.controller('welcomeCtrl', function($route, $routeParams){
+	
+
+});

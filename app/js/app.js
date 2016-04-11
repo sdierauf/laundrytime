@@ -4,7 +4,8 @@ var laundryTimeApp = angular.module('laundryTime', ['ngRoute','ngResource']);
 laundryTimeApp.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider.when('/home', {
-			templateUrl: 'templates/welcome.html'
+			templateUrl: 'templates/welcome.html',
+			controller: 'welcomeCtrl'
 		}).
 		when('/info', {
 			templateUrl: 'templates/info.html'
