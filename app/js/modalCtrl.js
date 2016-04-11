@@ -1,19 +1,19 @@
-laundryTimeApp.controller('modalCtrl', function($scope) {
-	/* Report Modal */
-	$scope.reportSelector = {
-		selected: 1, 
-		description: "", 
-		show: false 
-		}; 
+laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
+	/* Report modal */
+	$scope.reportSelector = modalFactory.reportSelector;
+
+	/* User info */
+	$scope.userInfo = modalFactory.userInfo; 
 
 	$scope.reportModSelChanged = function () {
-		this.reportSelector.show = (this.reportSelector.selected == 5); 
+		$scope.reportSelector.show = ($scope.reportSelector.selected == 5); 
 	}
-	/* end Report Modal */
-	
-});/* endController */
 
-/*
-Last updated Ger: 
-This controller handles the modals triggered by the buttons 
-*/
+	$scope.checkPIN = function () {
+		/* send PIN to db here */
+	}
+
+	$scope.saveUserCookies = function(){
+		modalFactory.saveUserCookies(); 
+	}
+});/* endController */

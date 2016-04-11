@@ -1,5 +1,5 @@
  
-var laundryTimeApp = angular.module('laundryTime', ['ngRoute','ngResource']);
+var laundryTimeApp = angular.module('laundryTime', ['ngRoute','ngResource', 'ngCookies']);
 
 laundryTimeApp.config(['$routeProvider',
 	function($routeProvider) {

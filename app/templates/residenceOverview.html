@@ -30,18 +30,210 @@
       </div>
       <div class="row">
         <button class="btn btn-success" style="width: 100%"
-        data-toggle="modal" data-target="#LineModal">Get in line</button>
+        data-toggle="modal" data-target="#LoginModal">Get in line</button>
       </div>
       <div class="row">
         <button class="btn btn-danger" style="width: 100%" 
         data-toggle="modal" data-target="#reportModal">Report Problem</button>
       </div>
     </div>
+<<<<<<< HEAD
+=======
+
+    <div class="col-md-3 col-md-offset-2">
+      <div class="row" style="text-align: center;"> <h3> Machine 2 </h3> </div>
+      <div class="row">
+        <div class="col-md-6">
+          <p style="text-align: center; font-family:verdana;"> Queue: </p>
+          <div class="row" id="queue-info">
+            <p style="text-align: center"> 0/12 </p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <p style="text-align: center; font-family:verdana;"> Time approx: </p>
+          <div class="row" id="queue-info">
+            <p style="text-align: center"> 0 min </p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <img src="img/washing_machine_emtpy.png" style="width:100%; height: 300px;">
+      </div>
+      <div class="row">
+        <button class="btn btn-success" style="width: 100%"
+        data-toggle="modal" data-target="#LoginModal">Get in line</button>
+      </div>
+      <div class="row">
+        <button class="btn btn-danger" style="width: 100%" 
+        data-toggle="modal" data-target="#reportModal">Report Problem</button>
+      </div>
+    </div>
+>>>>>>> b79000deabb13d1ca4885aba1cbabc116ec629be
   </div>
+
+  <div class="test" ng-controller="modalCtrl">
+    <p>{{"Topic selected: " + reportSelector.selected}}</p>
+    <p>{{"Description problem: " + reportSelector.description}}</p>
+    <p>{{"User email: " + userInfo.email }}</p>
+  </div>
+
+</div> <!-- endResiDiv -->
+
+
 
 <!-- MODALS -->
 <!-- Ger: I wanna move this modals to other html file, and to use angularjs to 
-display them by ng-click & ng-inglude, unfortunately, I don't know how to do it
+display them, unfortunately, I don't know how to do it
 right now, so I'll check it later on --> 
 
+<<<<<<< HEAD
 <ng-include src="'templates/modal.html'" ng-controller="modalCtrl"></ng-include>
+=======
+<div class="modalClass" ng-controller="modalCtrl">
+ 
+  <!-- Report Modal  -->
+  <div id="reportModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Content -->
+        <div class="modal-content" >
+          <!-- Header -->
+          <div id="reportHeader" class="modal-header" style="padding:15px 30px;">
+            <h4 class="modal-title">Report Problem</h4>
+          </div>
+          <!-- Body -->
+          <div class="modal-body" style="padding:35px 50px;">
+            <form role="form">
+              <!-- inputEmail -->
+              <div class="form-group">
+                <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email</label>
+                <input type="text" class="form-control" id="usrname" placeholder="Enter email"
+                ng-model="userInfo.email" ng-change="saveUserCookies()">
+              </div>
+              <!-- problemSelector -->
+              <div class="form-group">
+                <label for="problem"><span class="glyphicon glyphicon-cog"></span> Problem </label>
+                <select class="form-control" name="problemsSelect" ng-model="reportSelector.selected" ng-Change="reportModSelChanged()">
+                  <option value="1"> The machine doesn't work. </option>
+                  <option value="2"> Someone has stolen the whaser. </option>
+                  <option value="3"> There is a monster staring at me. </option>
+                  <option value="4"> I'm just bored. </option>
+                  <option value="5"> Other... </option>
+                </select>
+              </div>
+              <!-- textInput -->
+              <div class="form-group" ng-show="reportSelector.show">
+                <label for="problemDescription"> Which is the problem? </label>
+                <input type="text" class="form-control" 
+                name="problemDescriptionText" ng-model="reportSelector.description">
+              </div>
+            </form>
+          </div>
+          <!-- Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" style="width: 20%">Report</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" 
+            style="width: 20%">Close</button>
+          </div>
+        </div>
+        <!-- endModalContent -->
+      </div>
+    </div> <!-- endReportModal -->
+    <!-- testing stuff -->
+
+    <!-- Log in Modal -->
+    <div id="LoginModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Content -->
+        <div class="modal-content" >
+          <!-- Header -->
+          <div id="LoginModalHeader" class="modal-header" style="padding:15px 30px;">
+            <h4 class="modal-title">Small Step</h4>
+          </div>
+          <!-- Body -->
+          <div class="modal-body" style="padding:35px 50px;">
+           <form>
+          	<!-- inputEmail -->
+              <div class="form-group">
+                <!-- email -->
+                <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email</label>
+                <input type="text" class="form-control" id="usrname" placeholder="Enter email"
+                ng-model="userInfo.email" ng-change="saveUserCookies()">
+                <center><p> We will send you an email when it's your turn. </p></center>
+                <!-- PIN -->
+                <label for="pin"><span class="glyphicon glyphicon-lock"></span> PIN</label>
+                <input type="password" class="form-control" inputmode="numeric" maxlength="4"></input>
+              </div>
+           </form>
+          </div>
+          <!-- Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" style="width: 20%" 
+            data-dismiss="modal" data-toggle="modal" data-target="#LineModal"> Ok </button>
+          </div>
+        </div>
+        <!-- endModalContent -->
+      </div>
+    </div> <!-- endReportModal -->
+
+    <!-- Get in Line modal -->
+    <div id="LineModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Content -->
+        <div class="modal-content" >
+          <!-- Header -->
+          <div id="LineHeader" class="modal-header" style="padding:15px 30px;">
+            <h4 class="modal-title">Queue</h4>
+          </div>
+          <!-- Body -->
+          <div class="modal-body" style="padding:5px 10px;">
+            	<div id="queueTable">
+            	<table class="table table-striped">
+				    <thead>
+				      <tr>
+				        <th>Username</th>
+				        <th>Estimated wait</th>
+				        <th>Email</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td>Darth Vader</td>
+				        <td>Whashing...</td>
+				        <td>iamthedarkness@darkside.evil</td>
+				        <td><button>&#10006;</button></td>
+				      </tr>
+				      <tr>
+				        <td>Snoopy</td>
+				        <td>40 min.</td>
+				        <td>*****</td>
+				        <td><button>&#10006;</button></td>
+				      </tr>
+				      <tr>
+				        <td>Jack Sparrow</td>
+				        <td>Infinity</td>
+				        <td>I_Me_and_Myself@blackpearl</td>
+				        <td><button>&#10006;</button></td>
+				      </tr>
+				      <tr>
+				      	<td>You</td>
+				      	<td>Someday</td>
+				      	<td>youremail@example.com</td>
+				      	<td><button>&#10006;</button></td>
+				      </tr>
+				    </tbody>
+				</table>
+				</div>
+          </div>
+          <!-- Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal"
+            style="width: 20%"> Ok </button>
+          </div>
+        </div>
+        <!-- endModalContent -->
+      </div>
+    </div>  
+
+</div> <!-- endModalsDiv -->
+
+>>>>>>> b79000deabb13d1ca4885aba1cbabc116ec629be
