@@ -60,4 +60,3 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams) {
 	console.log("Overview configured")
 
 });
-console.log("Was overviewCtrl configured")
