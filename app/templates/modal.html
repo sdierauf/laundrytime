@@ -3,7 +3,6 @@
   <!-- Report Modal  -->
   <div id="reportModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
-        <!-- Content -->
         <div class="modal-content" >
           <!-- Header -->
           <div id="reportHeader" class="modal-header" style="padding:15px 30px;">
@@ -43,15 +42,45 @@
             <button type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Close</button>
           </div>
         </div>
-        <!-- endModalContent -->
       </div>
-    </div> <!-- endReportModal -->
-    <!-- testing stuff -->
+    </div> 
+
+    <!-- Log in Modal -->
+    <div id="LoginModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content" >
+          <!-- Header -->
+          <div id="LoginModalHeader" class="modal-header" style="padding:15px 30px;">
+            <h4 class="modal-title">Small Step</h4>
+          </div>
+          <!-- Body -->
+          <div class="modal-body" style="padding:35px 50px;">
+           <form>
+            <!-- inputEmail -->
+              <div class="form-group">
+                <!-- email -->
+                <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email</label>
+                <input type="text" class="form-control" id="usrname" placeholder="Enter email"
+                ng-model="userInfo.email" ng-change="saveUserCookies()">
+                <center><p> We will send you an email when it's your turn. </p></center>
+                <!-- PIN -->
+                <label for="pin"><span class="glyphicon glyphicon-lock"></span> PIN</label>
+                <input type="password" class="form-control" inputmode="numeric" maxlength="4"></input>
+              </div>
+           </form>
+          </div>
+          <!-- Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" style="width: 20%" 
+            data-dismiss="modal" data-toggle="modal" data-target="#LineModal"> Ok </button>
+          </div>
+        </div>
+      </div>
+    </div> 
 
     <!-- Get in Line modal -->
     <div id="LineModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
-        <!-- Content -->
         <div class="modal-content" >
           <!-- Header -->
           <div id="LineHeader" class="modal-header" style="padding:15px 30px;">
@@ -103,10 +132,8 @@
             <button type="button" class="btn btn-success" ng-click="close()" data-dismiss="modal"> Ok </button>
           </div>
         </div>
-        <!-- endModalContent -->
       </div>
-    </div> <!-- endReportModal -->
-    {{reportSelector.selected + "" + reportSelector.description}}
+    </div> 
   
   </div> <!-- endModalsDiv -->
 
