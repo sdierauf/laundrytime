@@ -16,23 +16,17 @@
 }
 
 /* Line modal */
-#LineModal h4, .close {
+.modal-dialog h4, .close {
       color:white !important;
       text-align: center;
       font-size: 28px;
   }
 
-#LineHeader {
+#LineHeader, #LoginHeader {
   background-color: green;
-
 }
 
 /* Report modal */
-#reportModal h4, .close {
-      color:white !important;
-      text-align: center;
-      font-size: 28px;
-  }
 
 #reportHeader {
   background-color: red;

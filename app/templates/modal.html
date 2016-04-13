@@ -15,7 +15,8 @@
               <!-- inputEmail -->
               <div class="form-group">
                 <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email</label>
-                <input type="text" class="form-control" id="usrname" placeholder="Enter email">
+                <input type="text" class="form-control" id="usrname" placeholder="Enter email"
+                ng-model="userInfo.email">
               </div>
               <!-- problemSelector -->
               <div class="form-group">
@@ -50,7 +51,7 @@
       <div class="modal-dialog">
         <div class="modal-content" >
           <!-- Header -->
-          <div id="LoginModalHeader" class="modal-header" style="padding:15px 30px;">
+          <div id="LoginHeader" class="modal-header" style="padding:15px 30px;">
             <h4 class="modal-title">Small Step</h4>
           </div>
           <!-- Body -->
