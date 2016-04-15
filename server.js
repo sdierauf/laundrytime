@@ -148,6 +148,10 @@ var createServer = function(port, dbName) {
   getAllMachines.method = 'GET';
   getAllMachines.path = '/machines';
   getAllMachines.handler = function(req, res) {
+    var machineLocation = req.params.location;
+    if (machineLocation) {
+      return res(db('machines').find({location: machineLocation}));
+    }
     return res(db('machines'));
   }
 
@@ -159,7 +163,7 @@ var createServer = function(port, dbName) {
     var newMachine = {};
     newMachine.name = req.payload.name;
     newMachine.type = req.payload.type;
-    newMachine.location = 
+    newMachine.location = String(req.payload.location).toLowerCase();
     newMachine.queue = [];
     newMachine.operational = true;
     newMachine.problemMessage = "";
@@ -175,7 +179,8 @@ var createServer = function(port, dbName) {
   postMachine.config.validate = {
     payload: {
       name: Joi.string(),
-      type: Joi.string()
+      type: Joi.string(),
+      location: Joi.string()
     }
   }
 
