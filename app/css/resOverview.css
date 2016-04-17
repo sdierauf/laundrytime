@@ -15,19 +15,22 @@
   background-color: #f9f9f9;
 }
 
-/* Line modal */
 .modal-dialog h4, .close {
       color:white !important;
       text-align: center;
       font-size: 28px;
   }
 
+.modal-header {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
 #LineHeader, #LoginHeader {
   background-color: green;
 }
 
 /* Report modal */
-
 #reportHeader {
   background-color: red;
 }
