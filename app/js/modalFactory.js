@@ -33,10 +33,10 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 	/* end Cookies */
 
 	/* http requests */
-	this.addUserToQueue = function(){
+	this.addUserToQueue = function(machineName){
 		var req = $http({
 			method: 'POST', 
-			url: '/machines/Machine 1/queue',
+			url: '/machines/'+machineName+'/queue',
 			data: {
 				user: this.userInfo.email,
 				minutes: 20, 
@@ -47,14 +47,8 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 		return req; 
 	}
 
-	this.getQueue = function(machine){
-		return $http.get('/machines/'+machine+'/queue');
-	}
-
-	/* Setters and Getters */
-
-	this.setMachineQueue = function(newValue){
-		this.machineQueue = newValue; 
+	this.getQueue = function(machineName){
+		return $http.get('/machines/'+machineName+'/queue');
 	}
 	
 	/* return the service */

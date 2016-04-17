@@ -15,8 +15,8 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 	
 	/* functions */
 	$scope.reportModSelChanged = function () {
-		$scope.modalFactory.reportSelector.show = 
-		($scope.modalFactory.reportSelector.selected == 5); 
+		modalFactory.reportSelector.show = 
+		(modalFactory.reportSelector.selected == 5); 
 	}
 
 	$scope.saveUserCookies = function(){
@@ -27,8 +27,9 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 
 	/* POST REQUEST */
 	$scope.addUserToQueue = function(){
-		modalFactory.addUserToQueue().
+		modalFactory.addUserToQueue("Machine 1").
 		then(handleSuccess, handleError); 
+		/* update Queue */
 		$scope.getQueue('Machine 1'); 
 	}
 
