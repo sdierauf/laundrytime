@@ -27,15 +27,15 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 
 	/* POST REQUEST */
 	$scope.addUserToQueue = function(){
-		modalFactory.addUserToQueue("Machine 1").
+		modalFactory.addUserToQueue().
 		then(handleSuccess, handleError); 
 		/* update Queue */
-		$scope.getQueue('Machine 1'); 
+		$scope.getQueue(); 
 	}
 
 	/* GET REQUEST */
-	$scope.getQueue = function(machineName){
-		modalFactory.getQueue(machineName).then(
+	$scope.getQueue = function(){
+		modalFactory.getQueue().then(
 		/* Success */
 		function(obj){
 			var queue = [];

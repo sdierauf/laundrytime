@@ -4,7 +4,10 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 	var cookUserInfo = $cookieStore.get('userInfo'); 
 
 	/* */
-	this.machineQueue = [];
+	this.machine = {
+		name: "", 
+		queue: []
+	}
 
 	/* if there is not value stored in cookies */
 	if(cookReportSelector === undefined){
@@ -20,7 +23,7 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 	if(cookUserInfo === undefined){
 			 this.userInfo = {
 				email: "", 
-				PIN: null
+				pin: null
 			};  
 	}else{
 		this.userInfo = cookUserInfo; 
@@ -33,22 +36,32 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 	/* end Cookies */
 
 	/* http requests */
-	this.addUserToQueue = function(machineName){
+	this.addUserToQueue = function(){
 		var req = $http({
 			method: 'POST', 
-			url: '/machines/'+machineName+'/queue',
+			url: '/machines/'+this.machine.name+'/queue',
 			data: {
 				user: this.userInfo.email,
 				minutes: 20, 
-				pin: 0000, 
+				pin: this.userInfo.pin, 
 			}
 		});
 
 		return req; 
 	}
 
-	this.getQueue = function(machineName){
-		return $http.get('/machines/'+machineName+'/queue');
+	/* Setters and Getters */
+
+	this.setMachineQueue = function(queue){
+		this.machine.queue = queue; 
+	}
+
+	this.setMachineName = function(newName){
+		this.machine.name = newName; 
+	}
+
+	this.getQueue = function(){
+		return $http.get('/machines/'+this.machine.name+'/queue');
 	}
 	
 	/* return the service */
