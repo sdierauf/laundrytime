@@ -53,4 +53,45 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 			});
 	}
 
+	/* Validation process for the Login modal */
+	$scope.validateLogin = function(){ 
+		if(validatePIN('LoginPinForm') & validateEmail('LoginEmailForm'))
+		{
+			/* Everything OK */
+			$scope.addUserToQueue(); 
+			$('#LoginModal').modal('hide');
+			$('#LineModal').modal('show');  
+		}else{
+			/* Something Wrong */
+
+		}
+	}
+
+	/* This method will add 'has-error' to elementId class 
+	if the PIN is not accepted */
+	var validatePIN = function(elementId){
+		if(modalFactory.userInfo.pin === undefined
+		|| modalFactory.userInfo.pin.length < 4
+		|| isNaN(modalFactory.userInfo.pin)){
+			document.getElementById(elementId).className = 'form-group has-error';
+			return false; 
+		}else{
+			document.getElementById(elementId).className = 'form-group'
+			return true;
+		}
+	}
+
+	/* This method will add 'has-error' to elementId class 
+	if the email is not accepted */
+	var validateEmail = function(elementId){
+		var re = /\S+@\S+\.\S+/;
+    	if(!re.test(modalFactory.userInfo.email)){
+			document.getElementById(elementId).className = 'form-group has-error';
+    		return false; 
+    	}else{
+			document.getElementById(elementId).className = 'form-group'
+    		return true; 
+    	}
+	}
+
 });/* endController */

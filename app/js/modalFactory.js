@@ -23,7 +23,7 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 	if(cookUserInfo === undefined){
 			 this.userInfo = {
 				email: "", 
-				pin: null
+				pin: ""
 			};  
 	}else{
 		this.userInfo = cookUserInfo; 
