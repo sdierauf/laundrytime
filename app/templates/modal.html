@@ -30,7 +30,7 @@
                 </select>
               </div>
               <!-- textInput -->
-              <div class="form-group" ng-show="modalFactory.reportSelector.show">
+              <div id="reportFormDescription" class="form-group" ng-show="modalFactory.reportSelector.show">
                 <label for="problemDescription"> Which is the problem? </label>
                 <input type="text" class="form-control" 
                 name="problemDescriptionText" ng-model="modalFactory.reportSelector.description">
@@ -39,7 +39,7 @@
           </div>
           <!-- Footer -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" ng-click="report()">Report</button>
+            <button type="button" class="btn btn-danger" ng-click="reportProblem()">Report</button>
             <button type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Close</button>
           </div>
         </div>

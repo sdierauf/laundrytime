@@ -25,12 +25,22 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 
 	/* html calls */
 
+
 	/* POST REQUEST */
 	$scope.addUserToQueue = function(){
 		modalFactory.addUserToQueue().
 		then(handleSuccess, handleError); 
 		/* update Queue */
 		$scope.getQueue(); 
+	}
+
+	$scope.reportProblem = function(){
+		if(validateDescription()){
+			modalFactory.reportProblem().then(handleSuccess, handleError);
+			$('#reportModal').modal('hide'); 
+		}else{
+			/* Error */
+		}
 	}
 
 	/* GET REQUEST */
@@ -92,6 +102,19 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 			document.getElementById(elementId).className = 'form-group'
     		return true; 
     	}
+	}
+
+	var validateDescription = function(){
+		if(modalFactory.reportSelector.selected === '5'
+			&& modalFactory.reportSelector.description.length === 0){
+			/* Error */
+			document.getElementById('reportFormDescription').className = "form-group has-error";
+			return false; 
+		}else{
+			/*everything ok */
+			document.getElementById('reportFormDescription').className = "form-group";
+			return true; 
+		}
 	}
 
 });/* endController */
