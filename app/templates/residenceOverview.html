@@ -1,6 +1,6 @@
 <!-- Partial of the residence Overview -->
 
-<div class="residence" ng-controller="overviewCtrl">
+<div class="residence">
   <!-- Residence title -->
   <div class="topBackground" style="height:200px; width:100%;">
     <h1 style="text-align:center; padding-top:75px;"> {{currentResName}} </h1>
@@ -8,7 +8,6 @@
 
   <!-- Washing machines -->
   <div class="row" style="padding-top:50px">
-
     <div class="col-md-3 washer_holder" style="border: 1px solid black" ng-repeat="machine in currentMachines">
       <div class="row" style="text-align: center;"> <h3> {{machine.name}} </h3> </div>
       <div class="row">
@@ -37,6 +36,7 @@
         data-toggle="modal" data-target="#reportModal">Report Problem</button>
       </div>
     </div>
+    <a href="#" class="btn btn-default btn-circle" data-target="#AddModal">+</a>
   </div>
 
 <ng-include src="'templates/modal.html'" ng-controller="modalCtrl"></ng-include>

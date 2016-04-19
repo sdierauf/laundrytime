@@ -26,6 +26,7 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams) {
 	}
 
 	$scope.currentMachines = []
+
 	var setCurrentMachines = function(data){
 		$scope.currentMachines = []
 		for(i = 0; i < data.length; i++){
@@ -45,6 +46,7 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams) {
 		var all_machines = xmlHttp.responseText
 
 		$.get("/machines", setCurrentMachines, "json")
+		console.log("Sent request for all machines")
 	}
 	$scope.getAllMachinesFromResidence()
 	

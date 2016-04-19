@@ -23,5 +23,3 @@ laundryTimeApp.config(['$routeProvider',
 
 	}
 ]);
-
-console.log("Laundry time configured")
