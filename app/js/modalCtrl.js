@@ -2,6 +2,13 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 
 	$scope.modalFactory = modalFactory;
 
+	/* I think this variable doesn't need to be shared 
+	between controllers */
+	$scope.userToBeDeleted = {
+		email: "", 
+		pin: ""
+	}; 
+
 	/* handle functions */
 	var handleSuccess = function(data){
 		console.log("Success: ");
@@ -35,7 +42,7 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 	}
 
 	$scope.reportProblem = function(){
-		if(validateDescription()){
+		if(validateDescriptionandUpdate()){
 			modalFactory.reportProblem().then(handleSuccess, handleError);
 			$('#reportModal').modal('hide'); 
 		}else{
@@ -65,7 +72,8 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 
 	/* Validation process for the Login modal */
 	$scope.validateLogin = function(){ 
-		if(validatePIN('LoginPinForm') & validateEmail('LoginEmailForm'))
+		if(validatePINandUpdate('LoginPinForm', modalFactory.userInfo.pin) 
+			& validateEmailandUpdate('LoginEmailForm',modalFactory.userInfo.email))
 		{
 			/* Everything OK */
 			$scope.addUserToQueue(); 
@@ -73,16 +81,13 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 			$('#LineModal').modal('show');  
 		}else{
 			/* Something Wrong */
-
 		}
 	}
 
 	/* This method will add 'has-error' to elementId class 
-	if the PIN is not accepted */
-	var validatePIN = function(elementId){
-		if(modalFactory.userInfo.pin === undefined
-		|| modalFactory.userInfo.pin.length < 4
-		|| isNaN(modalFactory.userInfo.pin)){
+	if the PIN is not accepted, true = ok  */
+	var validatePINandUpdate = function(elementId, pin){
+		if(!checkPIN(pin)){
 			document.getElementById(elementId).className = 'form-group has-error';
 			return false; 
 		}else{
@@ -91,11 +96,18 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 		}
 	}
 
+	/* return true if ok, otherwise false */
+	var checkPIN = function(pin){
+		return !(pin === undefined
+		|| pin.length < 4
+		|| isNaN(pin));
+	}
+
+
 	/* This method will add 'has-error' to elementId class 
-	if the email is not accepted */
-	var validateEmail = function(elementId){
-		var re = /\S+@\S+\.\S+/;
-    	if(!re.test(modalFactory.userInfo.email)){
+	if the email is not accepted, true = ok  */
+	var validateEmailandUpdate = function(elementId, email){
+    	if(!checkEmail(email)){
 			document.getElementById(elementId).className = 'form-group has-error';
     		return false; 
     	}else{
@@ -104,7 +116,14 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
     	}
 	}
 
-	var validateDescription = function(){
+	/* return true if ok, otherwise false */
+	var checkEmail = function(email){
+		var re = /\S+@\S+\.\S+/;
+		return re.test(email);
+	}
+
+	/* true = ok */
+	var validateDescriptionandUpdate = function(){
 		if(modalFactory.reportSelector.selected === '5'
 			&& modalFactory.reportSelector.description.length === 0){
 			/* Error */
@@ -115,6 +134,33 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 			document.getElementById('reportFormDescription').className = "form-group";
 			return true; 
 		}
+	}
+
+	/* Calls the factory to remove a user from the queue */
+	$scope.deleteUser = function(){
+		/* validate pin */
+		if(validatePINandUpdate('deletePinForm', $scope.userToBeDeleted.pin)){
+			console.log("POST delete user");
+			modalFactory.deleteUser($scope.userToBeDeleted.email, 
+				$scope.userToBeDeleted.pin).then(handleSuccess, 
+				handleError); 
+			/* remember to change this sh*t */
+			setTimeout(function(){
+				$('#DeleteModal').modal('hide'); 
+				$scope.userToBeDeleted.pin = ""; 
+			}, 2000); 
+		}else{
+			/* format error pin */
+			console.log("format error pin"); 
+		}
+	}
+
+	/* Transition LineModal -> DeleteModal */
+	$scope.showDeleteUser = function(user){
+		$scope.userToBeDeleted.email = user; 
+		$('#LineModal').modal('hide'); 
+		$('#deleteUserEmail').text(user);
+		$('#DeleteModal').modal('show'); 
 	}
 
 });/* endController */

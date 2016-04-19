@@ -70,7 +70,7 @@
                 <div class="form-group" id="LoginPinForm">
                   <!-- PIN -->
                   <label for="pin"><span class="glyphicon glyphicon-lock"></span> PIN</label>
-                  <input type="password" class="form-control has-e" inputmode="numeric" maxlength="4" ng-model="modalFactory.userInfo.pin"></input>
+                  <input type="password" class="form-control" inputmode="numeric" maxlength="4" ng-model="modalFactory.userInfo.pin"></input>
                 </div>
               </div>
            </form>
@@ -94,32 +94,62 @@
           </div>
           <!-- Body -->
           <div class="modal-body" style="padding:5px 10px;">
+              <!-- QUEUE CONTENT -->
             	<div id="queueTable">
-            	<table class="table table-striped">
-				    <thead>
-				      <tr>
-				        <th>Username</th>
-				        <th>Estimated wait</th>
-				      </tr>
-				    </thead>
-				    <tbody ng-repeat="obj in modalFactory.machine.queue">
-				      <tr>
-				        <td>{{obj.user}}</td>
-				        <td>{{obj.minutes}}</td>
-				        <td><button>&#10006;</button></td>
-				      </tr>
-				    </tbody>
-				</table>
-				</div>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Username</th>
+                      <th>Estimated wait</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="obj in modalFactory.machine.queue">
+                      <td>{{obj.user}}</td>
+                      <td>{{obj.minutes}}</td>
+                      <td><button ng-click="showDeleteUser(obj.user)">&#10006;</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
           </div>
           <!-- Footer -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" ng-click="close()" data-dismiss="modal"> Ok </button>
+            <button type="button" class="btn btn-success" data-dismiss="modal"> Ok </button>
           </div>
         </div>
       </div>
     </div> 
-  
    </div> <!-- endModalsDiv -->
+
+   <!-- deleteUserModal -->
+   <div id="DeleteModal" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <!-- Header -->
+          <div id="DeleteHeader" class="modal-header" style="padding:15px 30px;">
+            <h4 id="deleteTitle" class="modal-title">Delete</h4>
+          </div>
+          <!-- Body -->
+          <div class="modal-body" style="padding:35px 50px;">
+           <form name="DeleteForm">
+            <div class="form-group" id="deletePinForm">
+              <p>You're going to delete <b id="deleteUserEmail"></b> from the queue.</p>
+              <!-- PIN -->
+              <label for="pin"><span class="glyphicon glyphicon-lock"></span> PIN</label>
+              <input type="password" class="form-control" inputmode="numeric" maxlength="4" ng-model="userToBeDeleted.pin"></input>
+            </div>
+           </form>
+          </div>
+          <!-- Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" style="width: 30%" data-dismiss="modal" data-toggle="modal" data-target="#LineModal"> Cancel </button>
+            <button type="button" class="btn btn-danger" style="width: 30%" ng-click="deleteUser()"> Delete </button>
+          </div>
+         </div>
+      </div>
+    </div> 
+    <!-- end DeleteUserModal -->
+
   </div><!-- bordersRounded -->
 </div> <!-- endResiDiv -->

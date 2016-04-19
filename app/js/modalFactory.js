@@ -61,7 +61,6 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 		var payload = {
 			message: ""
 		}; 
-		console.log(this.reportSelector.selected==='3');
 		switch(this.reportSelector.selected){
 			case '1':
 				payload.message = "The machine doesn't work";
@@ -79,8 +78,15 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 				payload.message = this.reportSelector.description;
 				break; 
 		}
-		console.log("Payload: " + payload.message);
 		return $http.post('/machines/'+this.machine.name+'/report', payload); 
+	}
+
+	this.deleteUser = function(email, pin){
+		var payload = {
+			user: email, 
+			pin: pin
+		};
+		return $http.post('/machines/'+this.machine.name+'/queue/delete', payload); 		
 	}
 
 	/* Setters and Getters */
