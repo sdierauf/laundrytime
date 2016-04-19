@@ -298,7 +298,7 @@ var createServer = function(port, dbName) {
     if (found.pin != req.payload.pin) {
       return res({message: 'incorrect pin'}).code(404);
     }
-    var deleted = queue.slice(itemIndex, 1);
+    var deleted = queue.splice(itemIndex, 1);
     return res(deleted).code(200);
   };
   deleteFromQueue.config.validate = {

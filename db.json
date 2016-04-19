@@ -12,7 +12,8 @@
       "type": "washer",
       "queue": [],
       "location": "farsta",
-      "queue_time": 0},
+      "queue_time": 0
+    },
     {
       "name": "Machine 1",
       "type": "washer",
@@ -33,41 +34,41 @@
       "queue": [],
       "location": "tyreso",
       "queue_time": 0
-      },
+    },
     {
       "name": "Machine 2i",
       "type": "washer",
       "queue": [],
       "location": "tyreso",
-    "queue_time": 0
+      "queue_time": 0
     },
     {
       "name": "Washing Machine 1",
       "type": "washer",
       "queue": [],
       "location": "lappis",
-    "queue_time": 0
+      "queue_time": 0
     },
     {
       "name": "Washing Machine 2",
       "type": "washer",
       "queue": [],
       "location": "lappis",
-    "queue_time": 0
+      "queue_time": 0
     },
     {
       "name": "Drying Machine 1",
       "type": "dryer",
       "queue": [],
       "location": "lappis",
-    "queue_time": 0
+      "queue_time": 0
     },
     {
       "name": "Drying Machine 2i",
       "type": "dryer",
       "queue": [],
       "location": "lappis",
-      "queue_time" : 0
+      "queue_time": 0
     }
   ]
 }
