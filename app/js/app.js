@@ -9,6 +9,10 @@ laundryTimeApp.config(['$routeProvider',
 		when('/info', {
 			templateUrl: 'templates/info.html'
 		}).
+		
+		when('/explaination', {
+			templateUrl: 'templates/explainationMachines.html'
+		}).
 		when('/about', {
 			templateUrl: 'templates/about.html'
 		}).
