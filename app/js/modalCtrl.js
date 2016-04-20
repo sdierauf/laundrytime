@@ -15,9 +15,8 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 		console.log(data); 
 	}
 
-	var handleError = function(data){
-		console.log("Error in modalCtrl.handleError():"); 
-		console.log(data); 
+	var handleError = function(res){
+		window.alert("Error " + res.status + ": " + res.data.message); 
 	}
 	
 	/* functions */
@@ -32,13 +31,15 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 
 	/* html calls */
 
-
 	/* POST REQUEST */
 	$scope.addUserToQueue = function(){
 		modalFactory.addUserToQueue().
-		then(handleSuccess, handleError); 
-		/* update Queue */
-		$scope.getQueue(); 
+		then(function(res){
+			/* Ok */
+			$scope.getQueue();
+			$('#LoginModal').modal('hide');
+			$('#LineModal').modal('show'); 
+		},handleError);
 	}
 
 	$scope.reportProblem = function(){
@@ -60,14 +61,9 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 				queue.push(obj.data.queue[i]);
 			} 
 			modalFactory.setMachineQueue(queue);  
-			console.log(obj);
-			console.log("Modal has got the queue machine successfully."); 
 		}
 		/* Erorr */
-			, function(obj){
-				console.log("Error in 'modalCtrl.getQueue()': "); 
-				console.log(obj); 
-			});
+			,handleError);
 	}
 
 	/* Validation process for the Login modal */
@@ -77,10 +73,6 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 		{
 			/* Everything OK */
 			$scope.addUserToQueue(); 
-			$('#LoginModal').modal('hide');
-			$('#LineModal').modal('show');  
-		}else{
-			/* Something Wrong */
 		}
 	}
 
@@ -140,18 +132,14 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 	$scope.deleteUser = function(){
 		/* validate pin */
 		if(validatePINandUpdate('deletePinForm', $scope.userToBeDeleted.pin)){
-			console.log("POST delete user");
 			modalFactory.deleteUser($scope.userToBeDeleted.email, 
-				$scope.userToBeDeleted.pin).then(handleSuccess, 
-				handleError); 
-			/* remember to change this sh*t */
-			setTimeout(function(){
-				$('#DeleteModal').modal('hide'); 
-				$scope.userToBeDeleted.pin = ""; 
-			}, 2000); 
-		}else{
-			/* format error pin */
-			console.log("format error pin"); 
+				$scope.userToBeDeleted.pin).then(
+				function(res){
+					/* everything ok */
+					$('#DeleteModal').modal('hide'); 
+					$scope.userToBeDeleted.pin = ""; 
+					window.alert("User deleted successfully.");
+				},handleError); 
 		}
 	}
 
