@@ -96,7 +96,7 @@
           <!-- Body -->
           <div class="modal-body" style="padding:5px 10px;">
               <!-- QUEUE CONTENT -->
-            	<div id="queueTable">
+            	<div id="queueTable" style="height:300px; overflow-y: scroll;">
                 <table class="table table-striped">
                   <thead>
                     <tr>
@@ -151,6 +151,12 @@
       </div>
     </div> 
     <!-- end DeleteUserModal -->
+
+    <!-- spinner for the http calls -->
+    <div class="spinner" id="loadingSpinnerModals" ng-show="loading"> 
+      <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+      <span class="sr-only">Loading...</span>
+    </div>
 
   </div><!-- bordersRounded -->
 </div> <!-- endResiDiv -->

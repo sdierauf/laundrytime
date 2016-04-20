@@ -8,15 +8,18 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 		email: "", 
 		pin: ""
 	}; 
+	$scope.loading = false; 
 
 	/* handle functions */
 	var handleSuccess = function(data){
 		console.log("Success: ");
-		console.log(data); 
+		console.log(data); 	
+		$scope.loading = false; 
 	}
 
 	var handleError = function(res){
 		window.alert("Error " + res.status + ": " + res.data.message); 
+		$scope.loading = false; 
 	}
 	
 	/* functions */
@@ -33,9 +36,11 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 
 	/* POST REQUEST */
 	$scope.addUserToQueue = function(){
+		$scope.loading = true;
 		modalFactory.addUserToQueue().
 		then(function(res){
 			/* Ok */
+			$scope.loading = false;
 			$scope.getQueue();
 			$('#LoginModal').modal('hide');
 			$('#LineModal').modal('show'); 
@@ -44,10 +49,15 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 
 	$scope.reportProblem = function(){
 		if(validateDescriptionandUpdate()){
-			modalFactory.reportProblem().then(handleSuccess, handleError);
-			$('#reportModal').modal('hide'); 
+			$scope.loading = true;
+			modalFactory.reportProblem().then(function(res){
+				$('#reportModal').modal('hide'); 	
+				/* would be fine to add a "success dialog" */
+			}, handleError);
+
 		}else{
 			/* Error */
+			window.alert("Try with another description please"); 
 		}
 	}
 
@@ -132,12 +142,14 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 	$scope.deleteUser = function(){
 		/* validate pin */
 		if(validatePINandUpdate('deletePinForm', $scope.userToBeDeleted.pin)){
+			$scope.loading = true; 
 			modalFactory.deleteUser($scope.userToBeDeleted.email, 
 				$scope.userToBeDeleted.pin).then(
 				function(res){
 					/* everything ok */
 					$('#DeleteModal').modal('hide'); 
-					$scope.userToBeDeleted.pin = ""; 
+					$scope.userToBeDeleted.pin = "";
+					$scope.loading = false;  
 					window.alert("User deleted successfully.");
 				},handleError); 
 		}
