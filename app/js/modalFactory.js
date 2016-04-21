@@ -44,8 +44,8 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 		var users_in_queue = this.machine.queue.length; 
 		console.log("AQUI:" + users_in_queue);
 		console.log(this.machine.queue); 
-		if(users_in_queue === undefined || users_in_queue == 0){
-			users_in_queue = 1; 
+		if(users_in_queue === undefined){
+			users_in_queue = 0; 
 		}
 		var aprox_time = users_in_queue * 50; 
 		if(aprox_time > 90){
