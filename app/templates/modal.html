@@ -1,5 +1,6 @@
 <div class="modalClass">
  
+ <div class="img-rounded">
   <!-- Report Modal  -->
   <div id="reportModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
@@ -16,12 +17,12 @@
               <div class="form-group">
                 <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email</label>
                 <input type="text" class="form-control" id="usrname" placeholder="Enter email"
-                ng-model="userInfo.email">
+                ng-model="modalFactory.userInfo.email">
               </div>
               <!-- problemSelector -->
               <div class="form-group">
                 <label for="problem"><span class="glyphicon glyphicon-cog"></span> Problem </label>
-                <select class="form-control" name="problemsSelect" ng-model="reportSelector.selected" ng-Change="reportModSelChanged()">
+                <select class="form-control" name="problemsSelect" ng-model="modalFactory.reportSelector.selected" ng-Change="reportModSelChanged()">
                   <option value="1"> The machine doesn't work. </option>
                   <option value="2"> Someone has stolen the whaser. </option>
                   <option value="3"> There is a monster staring at me. </option>
@@ -30,16 +31,16 @@
                 </select>
               </div>
               <!-- textInput -->
-              <div class="form-group" ng-show="reportSelector.show">
+              <div id="reportFormDescription" class="form-group" ng-show="modalFactory.reportSelector.show">
                 <label for="problemDescription"> Which is the problem? </label>
                 <input type="text" class="form-control" 
-                name="problemDescriptionText" ng-model="reportSelector.description">
+                name="problemDescriptionText" ng-model="modalFactory.reportSelector.description">
               </div>
             </form>
           </div>
           <!-- Footer -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" ng-click="report()">Report</button>
+            <button type="button" class="btn btn-danger" ng-click="reportProblem()">Report</button>
             <button type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Close</button>
           </div>
         </div>
@@ -49,33 +50,37 @@
     <!-- Log in Modal -->
     <div id="LoginModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
-        <div class="modal-content" >
+        <div class="modal-content">
           <!-- Header -->
           <div id="LoginHeader" class="modal-header" style="padding:15px 30px;">
             <h4 class="modal-title">Small Step</h4>
           </div>
           <!-- Body -->
           <div class="modal-body" style="padding:35px 50px;">
-           <form>
+           <form name="loginForm">
             <!-- inputEmail -->
               <div class="form-group">
-                <!-- email -->
-                <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email</label>
-                <input type="text" class="form-control" id="usrname" placeholder="Enter email"
-                ng-model="userInfo.email" ng-change="saveUserCookies()">
+                <div class="form-group" id="LoginEmailForm">
+                  <!-- email -->
+                  <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email</label>
+                  <input type="email" class="form-control" id="usrname" placeholder="Enter email"
+                  ng-model="modalFactory.userInfo.email" ng-change="saveUserCookies()" required>
+                </div>
                 <center><p> We will send you an email when it's your turn. </p></center>
-                <!-- PIN -->
-                <label for="pin"><span class="glyphicon glyphicon-lock"></span> PIN</label>
-                <input type="password" class="form-control" inputmode="numeric" maxlength="4"></input>
+
+                <div class="form-group" id="LoginPinForm">
+                  <!-- PIN -->
+                  <label for="pin"><span class="glyphicon glyphicon-lock"></span> PIN</label>
+                  <input type="password" class="form-control has-e" inputmode="numeric" maxlength="4" ng-model="modalFactory.userInfo.pin"></input>
+                </div>
               </div>
            </form>
           </div>
           <!-- Footer -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" style="width: 20%" 
-            data-dismiss="modal" data-toggle="modal" data-target="#LineModal"> Ok </button>
+            <button type="button" class="btn btn-success" style="width: 20%" data-target="#LineModal" ng-click="validateLogin();"> Ok </button>
           </div>
-        </div>
+         </div>
       </div>
     </div> 
 
@@ -96,33 +101,13 @@
 				      <tr>
 				        <th>Username</th>
 				        <th>Estimated wait</th>
-				        <th>Email</th>
 				      </tr>
 				    </thead>
-				    <tbody>
+				    <tbody ng-repeat="obj in modalFactory.machine.queue">
 				      <tr>
-				        <td>Darth Vader</td>
-				        <td>Whashing...</td>
-				        <td>iamthedarkness@darkside.evil</td>
+				        <td>{{obj.user}}</td>
+				        <td>{{obj.minutes}}</td>
 				        <td><button>&#10006;</button></td>
-				      </tr>
-				      <tr>
-				        <td>Snoopy</td>
-				        <td>40 min.</td>
-				        <td>*****</td>
-				        <td><button>&#10006;</button></td>
-				      </tr>
-				      <tr>
-				        <td>Jack Sparrow</td>
-				        <td>Infinity</td>
-				        <td>I_Me_and_Myself@blackpearl</td>
-				        <td><button>&#10006;</button></td>
-				      </tr>
-				      <tr>
-				      	<td>You</td>
-				      	<td>Someday</td>
-				      	<td>youremail@example.com</td>
-				      	<td><button>&#10006;</button></td>
 				      </tr>
 				    </tbody>
 				</table>
@@ -151,4 +136,6 @@
 
         </div>
       </div>
-</div> <!-- endModalsDiv -->
+   </div> <!-- endModalsDiv -->
+  </div><!-- bordersRounded -->
+</div> <!-- endResiDiv -->

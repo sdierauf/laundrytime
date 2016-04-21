@@ -1,6 +1,6 @@
 
 
-laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams) {
+laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFactory) {
 
 
 	$scope.getResidenceName = function() {
@@ -57,6 +57,12 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams) {
 		xmlHttp.send()
 
 		return xml.responseText.length
+	}
+
+
+	/* Method to pass data to modalFactory */
+	$scope.sendToModalFactory = function(machineName){
+		modalFactory.setMachineName(machineName); 
 	}
 
 	console.log("Overview configured")
