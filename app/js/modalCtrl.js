@@ -1,25 +1,22 @@
 laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 
 	$scope.modalFactory = modalFactory;
-
+	
 	/* I think this variable doesn't need to be shared 
 	between controllers */
 	$scope.userToBeDeleted = {
 		email: "", 
 		pin: ""
 	}; 
-	$scope.loading = false; 
 
 	/* handle functions */
 	var handleSuccess = function(data){
 		console.log("Success: ");
 		console.log(data); 	
-		$scope.loading = false; 
 	}
 
 	var handleError = function(res){
-		window.alert("Error " + res.status + ": " + res.data.message); 
-		$scope.loading = false; 
+		modalFactory.setErrorText("Error: " + res.data.message);
 	}
 	
 	/* functions */
@@ -36,44 +33,40 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 
 	/* POST REQUEST */
 	$scope.addUserToQueue = function(){
-		$scope.loading = true;
-		modalFactory.addUserToQueue().
-		then(function(res){
-			/* Ok */
-			$scope.loading = false;
-			$scope.getQueue();
-			$('#LoginModal').modal('hide');
-			$('#LineModal').modal('show'); 
-		},handleError);
+		$scope.getQueue().then( function(){
+			modalFactory.addUserToQueue().
+			then(function(res){
+				/* care with this */
+				$scope.getQueue();
+				$('#LoginModal').modal('hide');
+				$('#LineModal').modal('show'); 
+				modalFactory.setErrorText(""); 
+			},handleError);
+		}
+		,handleError);
 	}
 
 	$scope.reportProblem = function(){
 		if(validateDescriptionandUpdate()){
-			$scope.loading = true;
 			modalFactory.reportProblem().then(function(res){
 				$('#reportModal').modal('hide'); 	
-				/* would be fine to add a "success dialog" */
+				modalFactory.setErrorText("");
+				window.alert("Problem reported successfully.");
 			}, handleError);
-
-		}else{
-			/* Error */
-			window.alert("Try with another description please"); 
 		}
 	}
 
 	/* GET REQUEST */
 	$scope.getQueue = function(){
-		modalFactory.getQueue().then(
-		/* Success */
-		function(obj){
-			var queue = [];
-			for(var i = 0; i < obj.data.queue.length; i++){
-				queue.push(obj.data.queue[i]);
-			} 
-			modalFactory.setMachineQueue(queue);  
-		}
-		/* Erorr */
-			,handleError);
+		return modalFactory.getQueue().then(
+			function(obj){
+				var queue = [];
+				for(var i = 0; i < obj.data.queue.length; i++){
+					queue.push(obj.data.queue[i]);
+				} 
+				modalFactory.setMachineQueue(queue);  
+			}
+				,handleError);
 	}
 
 	/* Validation process for the Login modal */
@@ -142,14 +135,13 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 	$scope.deleteUser = function(){
 		/* validate pin */
 		if(validatePINandUpdate('deletePinForm', $scope.userToBeDeleted.pin)){
-			$scope.loading = true; 
 			modalFactory.deleteUser($scope.userToBeDeleted.email, 
 				$scope.userToBeDeleted.pin).then(
 				function(res){
 					/* everything ok */
 					$('#DeleteModal').modal('hide'); 
 					$scope.userToBeDeleted.pin = "";
-					$scope.loading = false;  
+					modalFactory.setErrorText("");
 					window.alert("User deleted successfully.");
 				},handleError); 
 		}
@@ -161,6 +153,10 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 		$('#LineModal').modal('hide'); 
 		$('#deleteUserEmail').text(user);
 		$('#DeleteModal').modal('show'); 
+	}
+
+	$scope.close = function(){
+		modalFactory.setErrorText("");  
 	}
 
 });/* endController */
