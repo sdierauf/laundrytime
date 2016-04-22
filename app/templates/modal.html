@@ -98,12 +98,14 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Queue</h4>
           </div>
-          <!-- Active job? -->
 
           <!-- Body -->
           <div class="modal-body" style="padding:5px 10px;">
               <!-- QUEUE CONTENT -->
             	<div id="queueTable" style="height:300px; overflow-y: scroll;">
+                <p ng-show="modalFactory.machine.activeJobMinutes != 0">
+                  There is a job running for {{modalFactory.machine.activeJobMinutes}} more minutes
+                </p>
                 <table class="table table-striped">
                   <thead>
                     <tr>

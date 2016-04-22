@@ -71,6 +71,10 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 		return $http.get('/machines/'+this.machine.name+'/queue');
 	}
 
+	this.getAllMachines = function(){
+		return $http.get('/machines/')
+	}
+
 	/* send a report to the serverjs */
 	this.reportProblem = function(){
 		var payload = {
@@ -118,6 +122,10 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 
 	this.setMachineQueue = function(queue){
 		this.machine.queue = queue; 
+	}
+
+	this.setMachineActiveMinutes = function(min){
+		this.machine.activeJobMinutes = min
 	}
 
 	this.setMachineName = function(newName){

@@ -69,6 +69,13 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 				,handleError);
 	}
 
+	$scope.getActiveJobMinutes = function(){
+		return modalFactory.getAllMachines().then(
+			function(obj){
+				modalFactory.setMachineActiveMinutes(minutes)
+			})
+	}
+
 	/* Validation process for the Login modal */
 	$scope.validateLogin = function(){ 
 		if(validatePINandUpdate('LoginPinForm', modalFactory.userInfo.pin) 
