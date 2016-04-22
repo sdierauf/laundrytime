@@ -124,7 +124,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-show="modalFactory.machine.activeJob">
+                    <tr ng-show="Object.keys(modalFactory.machine.activeJob).length > 0">
                       <td>{{modalFactory.machine.activeJob.user}}</td>
                       <td>{{modalFactory.machine.activeJob.minutes}}</td>
                       <td>ACTIVE JOB</td>
