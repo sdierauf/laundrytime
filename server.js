@@ -84,18 +84,18 @@ var createServer = function(port, dbName) {
   }
 
   var scheduleJob = function(job) {
-    api.log('info', 'scheduling job: ' + job);
+    api.log('info', 'scheduling job: ' + JSON.stringify(job));
     activeJobs[job.machineName] = {}
     if (job.minues == 0) {
       finishJob(job);
       return;
     }
     db('machines').find({name: job.machineName}).activeJob = job;
-    var timeout = setTimeout(1000 * 60, function() {
-      api.log('info', 'counting down job: ' + job + ' by one minute');
+    var timeout = setTimeout(function() {
+      api.log('info', 'counting down job: ' + JSON.stringify(job) + ' by one minute');
       job.minutes = job.minutes - 1;
       scheduleJob(job);
-    });
+    }, 1000 * 60);
     activeJobs[job.machineName] = timeout;
   }
 

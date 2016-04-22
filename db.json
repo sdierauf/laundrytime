@@ -102,7 +102,13 @@
       "type": "dryer",
       "queue": [],
       "location": "lappis",
-      "queue_time": 0
+      "queue_time": 0,
+      "activeJob": {
+        "user": "sdierauf@gmail.com",
+        "pin": 1234,
+        "minutes": 47,
+        "machineName": "Drying Machine 2i"
+      }
     }
   ]
 }
