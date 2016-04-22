@@ -28,14 +28,14 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFa
 	$scope.currentMachines = []
 
 	var setCurrentMachines = function(data){
-		$scope.currentMachines = []
+		$scope.currentMachines = [];
 		for(i = 0; i < data.length; i++){
 			machine = data[i]
 			if(machine['location'] == $scope.currentResName.toLowerCase()){
 				$scope.currentMachines.push(machine)
 			}
 		}
-		console.log($scope.currentMachines)
+		$scope.$apply();
 	}
 
 	$scope.getAllMachinesFromResidence = function() {
@@ -49,11 +49,8 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFa
 		console.log("Sent request for all machines")
 	}
 
-	$scope.$on('$viewContentLoaded', function() {
-	    //call it here
-	    $scope.getAllMachinesFromResidence()
-	    console.log("test")
-	});
+ 	$scope.getAllMachinesFromResidence()
+
 
 	$scope.getQueueSizeFromMachine = function(name){
 		var xmlHttp = new XMLHttpRequest()
