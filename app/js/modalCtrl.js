@@ -83,10 +83,9 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 	if the PIN is not accepted, true = ok  */
 	var validatePINandUpdate = function(elementId, pin){
 		if(!checkPIN(pin)){
-			document.getElementById(elementId).className = 'form-group has-error';
+			document.getElementById(elementId).className += 'has-error';
 			return false; 
 		}else{
-			document.getElementById(elementId).className = 'form-group'
 			return true;
 		}
 	}
