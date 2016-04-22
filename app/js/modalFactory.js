@@ -93,6 +93,16 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 		return $http.post('/machines/'+this.machine.name+'/queue/delete', payload); 		
 	}
 
+	this.dequeueUser = function(email, pin){
+		var payload = {
+			command: 'next', 
+			pin: pin,
+			minutes: 0
+		};
+		return $http.post('/machines/'+this.machine.name+'/queue/start', payload); 
+		console.log("Deleted successfully!")
+	}
+
 	/* Setters and Getters */
 
 	this.setMachineQueue = function(queue){

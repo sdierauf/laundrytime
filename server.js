@@ -104,10 +104,10 @@ var createServer = function(port, dbName) {
     api.log('info', 'starting job' + job);
     // start schedule
     // send mail
-    var mailForUserPartial = buildEmail("noreply <laundrytime-admin@" + mailgun_DOMAIN)(job.user)
+    var mailForUserPartial = buildEmail("laundrytime-admin@" + mailgun_DOMAIN)(job.user)
     job.mailPartial = mailForUserPartial;
     scheduleJob(job)
-    var startedMail = job.mailPartial("Job started")("Your LaundryTime job has been started.");
+    var startedMail = job.mailPartial("Job started")("Your LaundryTime job has been started. PIN: " + job.pin);
     Mailgun.messages().send(startedMail, function(error, body) {
       if (error) {
         api.log('error', error);

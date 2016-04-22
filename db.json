@@ -33,12 +33,6 @@
       "type": "washer",
       "queue": [
         {
-          "user": "carblll2@illinois.edu",
-          "pin": 1234,
-          "minutes": 20,
-          "machineName": "Machine 2i"
-        },
-        {
           "user": "ab@test.com",
           "pin": 1234,
           "minutes": 50,
@@ -46,7 +40,13 @@
         }
       ],
       "location": "farsta",
-      "queue_time": 0
+      "queue_time": 0,
+      "activeJob": {
+        "user": "carblll2@illinois.edu",
+        "pin": 1234,
+        "minutes": 20,
+        "machineName": "Machine 2i"
+      }
     },
     {
       "name": "Machine 1",
