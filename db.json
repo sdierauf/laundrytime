@@ -35,6 +35,12 @@
           "pin": 1234,
           "minutes": 20,
           "machineName": "Machine 2i"
+        },
+        {
+          "user": "ab@test.com",
+          "pin": 1234,
+          "minutes": 50,
+          "machineName": "Machine 2i"
         }
       ],
       "location": "farsta",

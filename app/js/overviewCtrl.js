@@ -107,6 +107,12 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFa
 		}
 	}
 
+	$scope.sendToModalFactory = function(machineName){
+		modalFactory.setMachineName(machineName)
+
+		
+	}
+
 
 	
 
