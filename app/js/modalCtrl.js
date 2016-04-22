@@ -72,7 +72,8 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 	/* Validation process for the Login modal */
 	$scope.validateLogin = function(){ 
 		if(validatePINandUpdate('LoginPinForm', modalFactory.userInfo.pin) 
-			& validateEmailandUpdate('LoginEmailForm',modalFactory.userInfo.email))
+			& validateEmailandUpdate('LoginEmailForm',modalFactory.userInfo.email)
+			& validateTimeandUpdate('LoginTimeForm',modalFactory.userInfo.estimated_time))
 		{
 			/* Everything OK */
 			$scope.addUserToQueue(); 
@@ -81,11 +82,24 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 
 	/* This method will add 'has-error' to elementId class 
 	if the PIN is not accepted, true = ok  */
-	var validatePINandUpdate = function(elementId, pin){
-		if(!checkPIN(pin)){
-			document.getElementById(elementId).className += 'has-error';
+	var validateTimeandUpdate = function(elementId, time){
+		if(time == 0 || time == undefined){
+			document.getElementById(elementId).className = 'form-group has-error';
 			return false; 
 		}else{
+    		document.getElementById(elementId).className = 'form-group';
+			return true;
+		}
+	}
+
+	/* This method will add 'has-error' to elementId class 
+	if the PIN is not accepted, true = ok  */
+	var validatePINandUpdate = function(elementId, pin){
+		if(!checkPIN(pin)){
+			document.getElementById(elementId).className = 'form-group has-error';
+			return false; 
+		}else{
+    		document.getElementById(elementId).className = 'form-group';
 			return true;
 		}
 	}
@@ -105,7 +119,7 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 			document.getElementById(elementId).className = 'form-group has-error';
     		return false; 
     	}else{
-			document.getElementById(elementId).className = 'form-group'
+    		document.getElementById(elementId).className = 'form-group';
     		return true; 
     	}
 	}
@@ -121,11 +135,9 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 		if(modalFactory.reportSelector.selected === '5'
 			&& modalFactory.reportSelector.description.length === 0){
 			/* Error */
-			document.getElementById('reportFormDescription').className = "form-group has-error";
+			document.getElementById('reportFormDescription').className += " has-error";
 			return false; 
 		}else{
-			/*everything ok */
-			document.getElementById('reportFormDescription').className = "form-group";
 			return true; 
 		}
 	}
