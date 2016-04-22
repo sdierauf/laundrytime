@@ -54,6 +54,21 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFa
 
  	$scope.getAllMachinesFromResidence()
 
+ 	$scope.fixProblem = function(machineName) {
+ 		console.log('fixing priblem of ' + machineName);
+ 		var machine;
+ 		for (var i = 0; i < $scope.currentMachines.length; i++) {
+ 			if ($scope.currentMachines[i].name == machineName) {
+ 				machine = $scope.currentMachines[i];
+ 			}
+ 		}
+ 		machine.problemMessage = null;
+ 		var xmlHttp = new XMLHttpRequest()
+ 		xmlHttp.open( "GET", "/machines/" + machineName + '/report/fixed', true );
+ 		xmlHttp.send();
+ 		console.log('allegedly fixing problme');
+ 	}
+
 
 	$scope.getQueueSizeFromMachine = function(name){
 		var xmlHttp = new XMLHttpRequest()

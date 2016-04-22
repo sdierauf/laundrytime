@@ -16,7 +16,7 @@
           <p style="text-align: center; font-family:verdana;"> Queue: </p>
           <div class="row" id="queue-info">
             <p style="text-align: center"> {{machine.queue.length}}/12 </p>
-            <a class="btn" id="arrow{{machine.name}}" style="text-align:center" ng-click="togglePersonsList(machine.name)"> V </a> 
+            <a class="btn" id="arrow{{machine.name}}" style="text-align:center" ng-click="togglePersonsL2ist(machine.name)"> V </a> 
           </div>
         </div>
         <div class="col-md-6">
@@ -29,9 +29,18 @@
       <div id="queueView{{machine.name}}"></div>
       <div class="row" style="width: 100%">
         <div ng-show="machine.problemMessage">
-          {{machine.problemMessage}}
+          <div class="col-md-9" style="padding-bottom: 20px">
+            <p>Reported Problem: {{machine.problemMessage}}</p>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-small" ng-click="fixProblem(machine.name)">fixed!</button>
+          </div>
         </div>
-        <img style="width: 100%" src="img/washing_machine_full.jpg">
+      </div>
+      <div class="row" style="padding-bottom: 10px">
+        <div class="col-md-12">
+          <img style="display: block; width: 100%; margin: 0 auto;" src="img/washing_machine_full.jpg">
+        </div>
       </div>
       <div class="row">
         <button class="btn btn-success" style="width: 100%"

@@ -328,6 +328,22 @@ var createServer = function(port, dbName) {
     }
   }
 
+  var fixedProblem = {};
+  fixedProblem.method = 'GET';
+  fixedProblem.path = '/machines/{machineName}/report/fixed';
+  fixedProblem.config = {};
+  fixedProblem.handler = function(req, res) {
+    var machine = db('machines').find({name: req.params.machineName});
+    if (!machine) {
+      return res({message: 'machine not found'}).code(404);
+    }
+    machine.operational = true;
+    machine.problemMessage = "";
+    api.log("info", req.params.machineName + " reported fixed");
+    return res(machine).code(200);
+  }
+
+
   // to get the current problem, just get the machine, then res.problemMessage;
 
   var deleteCurrentActiveJob = {};
@@ -379,6 +395,7 @@ var createServer = function(port, dbName) {
   api.route(dequeueAndRunJob);
   api.route(deleteFromQueue);
   api.route(reportProblem);
+  api.route(fixedProblem);
   api.route(deleteCurrentActiveJob);
   api.route(getCurrentActiveJob);
   api.route(testEmail);

@@ -25,8 +25,8 @@
       ],
       "location": "farsta",
       "queue_time": 0,
-      "problemMessage": "it's fucked",
-      "operational": false
+      "problemMessage": "",
+      "operational": true
     },
     {
       "name": "Machine 2i",
