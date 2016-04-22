@@ -112,7 +112,6 @@
             <h4 class="modal-title">Queue</h4>
           </div>
           <!-- Active job? -->
-
           <!-- Body -->
           <div class="modal-body" style="padding:5px 10px;">
               <!-- QUEUE CONTENT -->
@@ -125,6 +124,11 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr ng-show="modalFactory.machine.activeJob">
+                      <td>{{modalFactory.machine.activeJob.user}}</td>
+                      <td>{{modalFactory.machine.activeJob.minutes}}</td>
+                      <td>ACTIVE JOB</td>
+                    </tr>
                     <tr ng-repeat="obj in modalFactory.machine.queue">
                       <td>{{obj.user}}</td>
                       <td>{{obj.minutes}}</td>

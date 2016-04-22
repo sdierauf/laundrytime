@@ -9,6 +9,8 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 		queue: []
 	}
 
+	this.loadedMachine;
+
 	this.errorText = ""; 
 
 	/* if there is not value stored in cookies */
@@ -59,6 +61,10 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 	/* Get the queue of the current machine */
 	this.getQueue = function(){
 		return $http.get('/machines/'+this.machine.name+'/queue');
+	}
+
+	this.getMachine = function() {
+		return $http.get('/machines/'+this.machine.name);
 	}
 
 	/* send a report to the serverjs */
@@ -112,6 +118,10 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 
 	this.setMachineName = function(newName){
 		this.machine.name = newName; 
+	}
+
+	this.setMachine = function(machine) {
+		this.machine = machine;
 	}
 
 	this.setErrorText = function(newError){
