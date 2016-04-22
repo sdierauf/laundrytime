@@ -282,9 +282,19 @@ var createServer = function(port, dbName) {
   deleteFromQueue.path = '/machines/{machineName}/queue/delete';
   deleteFromQueue.config = {};
   deleteFromQueue.handler = function(req, res) {
+
     var machine = db('machines').find({name: req.params.machineName});
     if (!machine) {
       return res({message: 'machine not found'}).code(404);
+    }
+    var activeJob = machine.activeJob;
+    if (activeJob) {
+      if (activeJob.user == req.payload.user && activeJob.pin == req.payload.pin) {
+        var deleted = activeJob;
+        machine.activeJob = {};
+        activeJobs[req.params.machineName] = {};
+        return res(deleted).code(200);
+      }
     }
     var queue = machine.queue;
     if (queue.length == 0) {

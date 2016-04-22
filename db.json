@@ -37,7 +37,7 @@
       "activeJob": {
         "user": "ab@test.com",
         "pin": 1234,
-        "minutes": 37,
+        "minutes": 32,
         "machineName": "Machine 2i"
       }
     },

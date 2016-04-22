@@ -128,6 +128,7 @@
                       <td>{{modalFactory.machine.activeJob.user}}</td>
                       <td>{{modalFactory.machine.activeJob.minutes}}</td>
                       <td>ACTIVE JOB</td>
+                      <td><button ng-click="showDeleteUser(modalFactory.machine.activeJob.user)">&#10006;</button></td>
                     </tr>
                     <tr ng-repeat="obj in modalFactory.machine.queue">
                       <td>{{obj.user}}</td>
