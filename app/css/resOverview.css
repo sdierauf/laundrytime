@@ -76,3 +76,7 @@
   margin:10px;
   overflow: hidden;
 }
+
+.washererror {
+  border: 1px solid red;
+}
