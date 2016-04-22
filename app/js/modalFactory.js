@@ -30,6 +30,7 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 			};  
 	}else{
 		this.userInfo = cookUserInfo; 
+		this.userInfo.pin = ""; 
 	}
 
 	/* cookies */
