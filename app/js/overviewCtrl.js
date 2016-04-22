@@ -28,12 +28,15 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFa
 	$scope.currentMachines = []
 
 	var setCurrentMachines = function(data){
+		console.log('what the hell');
 		$scope.currentMachines = [];
 		for(i = 0; i < data.length; i++){
 			machine = data[i]
 			if(machine['location'] == $scope.currentResName.toLowerCase()){
 				$scope.currentMachines.push(machine)
+				console.log(machine)
 			}
+			
 		}
 		$scope.$apply();
 	}

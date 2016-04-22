@@ -9,7 +9,7 @@
 
   <!-- Washing machines -->
   <div class="row" style="padding-top:50px">
-    <div class="col-md-3 betterwasher" style="" ng-repeat="machine in currentMachines">
+    <div class="col-md-3 betterwasher" ng-repeat="machine in currentMachines">
       <div class="row" style="text-align: center;"> <h3> {{machine.name}} </h3> </div>
       <div class="row">
         <div class="col-md-6">
@@ -26,6 +26,9 @@
         </div>
       </div>
       <div class="row" style="width: 100%">
+        <div ng-show="machine.problemMessage">
+          {{machine.problemMessage}}
+        </div>
         <img style="width: 100%" src="img/washing_machine_full.jpg">
       </div>
       <div class="row">

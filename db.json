@@ -18,7 +18,9 @@
         }
       ],
       "location": "farsta",
-      "queue_time": 0
+      "queue_time": 0,
+      "problemMessage": "it's fucked",
+      "operational": false
     },
     {
       "name": "Machine 2i",
