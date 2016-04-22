@@ -1,6 +1,6 @@
 
 
-laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFactory) {
+laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFactory, $http) {
 
 
 	$scope.getResidenceName = function() {
@@ -63,11 +63,55 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFa
 		return xml.responseText.length
 	}
 
-
-	/* Method to pass data to modalFactory */
-	$scope.sendToModalFactory = function(machineName){
-		modalFactory.setMachineName(machineName); 
+	$scope.people = []
+	getDaQueue = function(machineName){
+		return $http.get('/machines/'+machineName+'/queue');
 	}
+
+	$scope.getQueue = function(machineName){
+		return getDaQueue(machineName).then(
+			function(obj){
+				var queue = [];
+				for(var i = 0; i < obj.data.queue.length; i++){
+					queue.push(obj.data.queue[i]);
+				} 
+				$scope.people = queue
+			}
+				);
+	}
+
+	$scope.getQueueFromMachine = function(name){
+		var xmlHttp = new XMLHttpRequest()
+		xmlHttp.open( "GET", "/machines/" + name + "/queue")
+		xmlHttp.send()
+		return xmlHttp.responseText
+	}
+
+	$scope.togglePersonsList = function(machineName){
+		if(document.getElementById("queueView" + machineName).innerHTML == ""){
+			$scope.getQueue(machineName).then(function(){
+				str = "<table>"
+				for(i = 0; i < $scope.people.length; i ++){
+					elem = $scope.people[i]
+					str += "<tr>"
+					str += "<td>" + elem.user + "</td>"
+					str += "<td>" + elem.minutes + "</td>"
+					str += "</tr>"
+				}
+				str += "</table>"
+				console.log(str)
+				document.getElementById("queueView" + machineName).innerHTML = str
+			})
+			document.getElementById("arrow" + machineName).innerHTML == " ^ "
+		}
+		else{
+			document.getElementById("queueView" + machineName).innerHTML = ""
+			document.getElementById("arrow" + machineName).innerHTML == " X "
+		}
+	}
+
+
+	
 
 	console.log("Overview configured");
 
