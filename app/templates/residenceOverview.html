@@ -1,13 +1,15 @@
 <!-- Partial of the residence Overview -->
 <div class="residence">
   <!-- Residence title -->
-  <div class="topBackground" style="height:200px; width:100%;">
-    <h1 style="text-align:center; padding-top:75px;"> {{currentResName}} </h1>
+  <div class="row">
+    <div class="topBackground" style="height:200px; width:100%;">
+      <h1 style="text-align:center; padding-top:75px;"> {{currentResName}} </h1>
+    </div>
   </div>
 
   <!-- Washing machines -->
   <div class="row" style="padding-top:50px">
-    <div class="col-md-3 washer_holder" style="border: 1px solid black" ng-repeat="machine in currentMachines">
+    <div class="col-md-3 betterwasher" style="" ng-repeat="machine in currentMachines">
       <div class="row" style="text-align: center;"> <h3> {{machine.name}} </h3> </div>
       <div class="row">
         <div class="col-md-6">

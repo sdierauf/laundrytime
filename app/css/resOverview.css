@@ -65,3 +65,14 @@
     width: 100px;
     height: 100px;
 }​
+
+.washer-holder {
+  color:blue;
+}
+
+.betterwasher {
+  border: 1px solid #999999;
+  border-radius: 15px;
+  margin:10px;
+  overflow: hidden;
+}
