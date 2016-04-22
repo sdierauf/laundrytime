@@ -14,6 +14,7 @@
           <p style="text-align: center; font-family:verdana;"> Queue: </p>
           <div class="row" id="queue-info">
             <p style="text-align: center"> {{machine.queue.length}}/12 </p>
+            <a class="btn" id="arrow{{machine.name}}" style="text-align:center" ng-click="togglePersonsList(machine.name)"> V </a> 
           </div>
         </div>
         <div class="col-md-6">
@@ -23,6 +24,7 @@
           </div>
         </div>
       </div>
+      <div id="queueView{{machine.name}}"></div>
       <div class="row" style="width: 100%">
         <img style="width: 100%" src="img/washing_machine_full.jpg">
       </div>
@@ -37,7 +39,6 @@
         ng-click="sendToModalFactory(machine.name)">Report Problem</button>
       </div>
     </div>
-    <a href="#" class="btn btn-default btn-circle" data-target="#AddModal">+</a>
   </div>
 
 <ng-include src="'templates/modal.html'" ng-controller="modalCtrl"></ng-include>
