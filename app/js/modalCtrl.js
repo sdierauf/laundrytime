@@ -147,12 +147,34 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 		}
 	}
 
+	$scope.dequeueUser = function(){
+		/* validate pin */
+		if(validatePINandUpdate('deletePinForm', $scope.userToBeDeleted.pin)){
+			modalFactory.dequeueUser($scope.userToBeDeleted.email, 
+				$scope.userToBeDeleted.pin).then(
+				function(res){
+					/* everything ok */
+					$('#DequeueModal').modal('hide'); 
+					$scope.userToBeDeleted.pin = "";
+					modalFactory.setErrorText("");
+					window.alert("User dequeued successfully.");
+				},handleError); 
+		}
+	}
+
 	/* Transition LineModal -> DeleteModal */
 	$scope.showDeleteUser = function(user){
 		$scope.userToBeDeleted.email = user; 
 		$('#LineModal').modal('hide'); 
 		$('#deleteUserEmail').text(user);
 		$('#DeleteModal').modal('show'); 
+	}
+
+	$scope.showDequeueUser = function(user){
+		$scope.userToBeDeleted.email = user; 
+		$('#LineModal').modal('hide'); 
+		$('#deleteUserEmail').text(user);
+		$('#DequeueModal').modal('show'); 
 	}
 
 	$scope.close = function(){
