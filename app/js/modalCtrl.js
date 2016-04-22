@@ -1,16 +1,22 @@
 laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 
 	$scope.modalFactory = modalFactory;
+	
+	/* I think this variable doesn't need to be shared 
+	between controllers */
+	$scope.userToBeDeleted = {
+		email: "", 
+		pin: ""
+	}; 
 
 	/* handle functions */
 	var handleSuccess = function(data){
 		console.log("Success: ");
-		console.log(data); 
+		console.log(data); 	
 	}
 
-	var handleError = function(data){
-		console.log("Error in modalCtrl.handleError():"); 
-		console.log(data); 
+	var handleError = function(res){
+		modalFactory.setErrorText("Error: " + res.data.message);
 	}
 	
 	/* functions */
@@ -25,64 +31,58 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 
 	/* html calls */
 
-
 	/* POST REQUEST */
 	$scope.addUserToQueue = function(){
-		modalFactory.addUserToQueue().
-		then(handleSuccess, handleError); 
-		/* update Queue */
-		$scope.getQueue(); 
+		$scope.getQueue().then( function(){
+			modalFactory.addUserToQueue().
+			then(function(res){
+				/* care with this */
+				$scope.getQueue();
+				$('#LoginModal').modal('hide');
+				$('#LineModal').modal('show'); 
+				modalFactory.setErrorText(""); 
+			},handleError);
+		}
+		,handleError);
 	}
 
 	$scope.reportProblem = function(){
-		if(validateDescription()){
-			modalFactory.reportProblem().then(handleSuccess, handleError);
-			$('#reportModal').modal('hide'); 
-		}else{
-			/* Error */
+		if(validateDescriptionandUpdate()){
+			modalFactory.reportProblem().then(function(res){
+				$('#reportModal').modal('hide'); 	
+				modalFactory.setErrorText("");
+				window.alert("Problem reported successfully.");
+			}, handleError);
 		}
 	}
 
 	/* GET REQUEST */
 	$scope.getQueue = function(){
-		modalFactory.getQueue().then(
-		/* Success */
-		function(obj){
-			var queue = [];
-			for(var i = 0; i < obj.data.queue.length; i++){
-				queue.push(obj.data.queue[i]);
-			} 
-			modalFactory.setMachineQueue(queue);  
-			console.log(obj);
-			console.log("Modal has got the queue machine successfully."); 
-		}
-		/* Erorr */
-			, function(obj){
-				console.log("Error in 'modalCtrl.getQueue()': "); 
-				console.log(obj); 
-			});
+		return modalFactory.getQueue().then(
+			function(obj){
+				var queue = [];
+				for(var i = 0; i < obj.data.queue.length; i++){
+					queue.push(obj.data.queue[i]);
+				} 
+				modalFactory.setMachineQueue(queue);  
+			}
+				,handleError);
 	}
 
 	/* Validation process for the Login modal */
 	$scope.validateLogin = function(){ 
-		if(validatePIN('LoginPinForm') & validateEmail('LoginEmailForm'))
+		if(validatePINandUpdate('LoginPinForm', modalFactory.userInfo.pin) 
+			& validateEmailandUpdate('LoginEmailForm',modalFactory.userInfo.email))
 		{
 			/* Everything OK */
 			$scope.addUserToQueue(); 
-			$('#LoginModal').modal('hide');
-			$('#LineModal').modal('show');  
-		}else{
-			/* Something Wrong */
-
 		}
 	}
 
 	/* This method will add 'has-error' to elementId class 
-	if the PIN is not accepted */
-	var validatePIN = function(elementId){
-		if(modalFactory.userInfo.pin === undefined
-		|| modalFactory.userInfo.pin.length < 4
-		|| isNaN(modalFactory.userInfo.pin)){
+	if the PIN is not accepted, true = ok  */
+	var validatePINandUpdate = function(elementId, pin){
+		if(!checkPIN(pin)){
 			document.getElementById(elementId).className = 'form-group has-error';
 			return false; 
 		}else{
@@ -91,11 +91,18 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 		}
 	}
 
+	/* return true if ok, otherwise false */
+	var checkPIN = function(pin){
+		return !(pin === undefined
+		|| pin.length < 4
+		|| isNaN(pin));
+	}
+
+
 	/* This method will add 'has-error' to elementId class 
-	if the email is not accepted */
-	var validateEmail = function(elementId){
-		var re = /\S+@\S+\.\S+/;
-    	if(!re.test(modalFactory.userInfo.email)){
+	if the email is not accepted, true = ok  */
+	var validateEmailandUpdate = function(elementId, email){
+    	if(!checkEmail(email)){
 			document.getElementById(elementId).className = 'form-group has-error';
     		return false; 
     	}else{
@@ -104,7 +111,14 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
     	}
 	}
 
-	var validateDescription = function(){
+	/* return true if ok, otherwise false */
+	var checkEmail = function(email){
+		var re = /\S+@\S+\.\S+/;
+		return re.test(email);
+	}
+
+	/* true = ok */
+	var validateDescriptionandUpdate = function(){
 		if(modalFactory.reportSelector.selected === '5'
 			&& modalFactory.reportSelector.description.length === 0){
 			/* Error */
@@ -115,6 +129,34 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 			document.getElementById('reportFormDescription').className = "form-group";
 			return true; 
 		}
+	}
+
+	/* Calls the factory to remove a user from the queue */
+	$scope.deleteUser = function(){
+		/* validate pin */
+		if(validatePINandUpdate('deletePinForm', $scope.userToBeDeleted.pin)){
+			modalFactory.deleteUser($scope.userToBeDeleted.email, 
+				$scope.userToBeDeleted.pin).then(
+				function(res){
+					/* everything ok */
+					$('#DeleteModal').modal('hide'); 
+					$scope.userToBeDeleted.pin = "";
+					modalFactory.setErrorText("");
+					window.alert("User deleted successfully.");
+				},handleError); 
+		}
+	}
+
+	/* Transition LineModal -> DeleteModal */
+	$scope.showDeleteUser = function(user){
+		$scope.userToBeDeleted.email = user; 
+		$('#LineModal').modal('hide'); 
+		$('#deleteUserEmail').text(user);
+		$('#DeleteModal').modal('show'); 
+	}
+
+	$scope.close = function(){
+		modalFactory.setErrorText("");  
 	}
 
 });/* endController */

@@ -9,6 +9,12 @@
           "pin": 1234,
           "minutes": 20,
           "machineName": "Machine 1"
+        },
+        {
+          "user": "danielenriquecarballal@gmail.com",
+          "pin": 1234,
+          "minutes": 50,
+          "machineName": "Machine 1"
         }
       ],
       "location": "farsta",

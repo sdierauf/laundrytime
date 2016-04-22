@@ -9,6 +9,8 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 		queue: []
 	}
 
+	this.errorText = ""; 
+
 	/* if there is not value stored in cookies */
 	if(cookReportSelector === undefined){
 		 this.reportSelector = {
@@ -38,12 +40,25 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 	/* http requests */
 	/* add the current user to the ueue of the current machine */
 	this.addUserToQueue = function(){
+		/* aprox time */
+		var users_in_queue = this.machine.queue.length; 
+		console.log("AQUI:" + users_in_queue);
+		console.log(this.machine.queue); 
+		if(users_in_queue === undefined){
+			users_in_queue = 0; 
+		}
+		var aprox_time = users_in_queue * 50; 
+		if(aprox_time > 90){
+			aprox_time = 90; /* 24 hours */
+		}
+
+		/* request */
 		var req = $http({
 			method: 'POST', 
 			url: '/machines/'+this.machine.name+'/queue',
 			data: {
 				user: this.userInfo.email,
-				minutes: 20, 
+				minutes: aprox_time, 
 				pin: this.userInfo.pin, 
 			}
 		});
@@ -61,7 +76,6 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 		var payload = {
 			message: ""
 		}; 
-		console.log(this.reportSelector.selected==='3');
 		switch(this.reportSelector.selected){
 			case '1':
 				payload.message = "The machine doesn't work";
@@ -79,8 +93,15 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 				payload.message = this.reportSelector.description;
 				break; 
 		}
-		console.log("Payload: " + payload.message);
 		return $http.post('/machines/'+this.machine.name+'/report', payload); 
+	}
+
+	this.deleteUser = function(email, pin){
+		var payload = {
+			user: email, 
+			pin: pin
+		};
+		return $http.post('/machines/'+this.machine.name+'/queue/delete', payload); 		
 	}
 
 	/* Setters and Getters */
@@ -93,6 +114,9 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 		this.machine.name = newName; 
 	}
 
+	this.setErrorText = function(newError){
+		this.errorText = newError; 
+	}
 	
 	/* return the service */
 	return this;	

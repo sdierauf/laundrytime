@@ -48,8 +48,12 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFa
 		$.get("/machines", setCurrentMachines, "json")
 		console.log("Sent request for all machines")
 	}
-	$scope.getAllMachinesFromResidence()
-	
+
+	$scope.$on('$viewContentLoaded', function() {
+	    //call it here
+	    $scope.getAllMachinesFromResidence()
+	    console.log("test")
+	});
 
 	$scope.getQueueSizeFromMachine = function(name){
 		var xmlHttp = new XMLHttpRequest()
@@ -65,6 +69,6 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFa
 		modalFactory.setMachineName(machineName); 
 	}
 
-	console.log("Overview configured")
+	console.log("Overview configured");
 
 });
