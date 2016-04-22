@@ -61,30 +61,43 @@
           <div class="modal-body" style="padding:35px 50px;">
            <form name="loginForm">
             <!-- inputEmail -->
-              <div class="form-group">
                 <div class="form-group" id="LoginEmailForm">
-                  <!-- email -->
-                  <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email</label>
-                  <input type="email" class="form-control" id="usrname" placeholder="Enter email"
-                  ng-model="modalFactory.userInfo.email" ng-change="saveUserCookies()" required>
+                    <!-- email -->
+                    <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email</label>
+                    <input type="email" class="form-control" id="usrname" placeholder="Enter email"
+                    ng-model="modalFactory.userInfo.email" ng-change="saveUserCookies()" required>
                 </div>
-                <center><p> We will send you an email when it's your turn. </p></center>
+                <center><p> We will send you an email when it's your turn.</p></center>
 
-                <div class="form-group" id="LoginPinForm">
-                  <!-- PIN -->
-                  <label for="pin"><span class="glyphicon glyphicon-lock"></span> PIN</label>
-                  <input type="password" class="form-control" inputmode="numeric" maxlength="4" ng-model="modalFactory.userInfo.pin"></input>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group" id="LoginPinForm">
+                      <!-- PIN -->
+                      <label for="pin"><span class="glyphicon glyphicon-lock"></span> PIN</label>
+                      <input type="password" class="form-control" inputmode="numeric" maxlength="4" ng-model="modalFactory.userInfo.pin"></input>
+                    </div> 
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <div class="form-group" id="LoginTimeForm">
+                      <!-- PIN -->
+                      <label for="pin"><span class="glyphicon glyphicon-time"></span> Estimated time (min)</label>
+                      <input type="number" class="form-control" inputmode="numeric" ng-model="modalFactory.userInfo.estimated_time"></input>
+                    </div> 
+                  </div>
                 </div>
-              </div>
-              <!-- error text -->
-              <ng-include src="'templates/errorText.html'" ng-controller="modalCtrl"></ng-include>
+
+                <!-- error text -->
+                <ng-include src="'templates/errorText.html'" ng-controller="modalCtrl"></ng-include>
            </form>
-          </div>
+          </div><!-- end modal Body -->
+
           <!-- Footer -->
           <div class="modal-footer">
             <button type="button" class="btn btn-default" style="width: 20%" data-dismiss="modal" ng-click="close()">Close</button>
-            <button type="button" class="btn btn-success" style="width: 20%" data-target="#LineModal" ng-click="validateLogin();"> Ok </button>
+            <button type="button" class="btn btn-success" style="width: 20%" data-target="#LineModal" ng-click="validateLogin();"> Ok </button><!-- end modal Footer -->
           </div>
+  
          </div>
       </div>
     </div> 

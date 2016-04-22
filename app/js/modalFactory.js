@@ -25,7 +25,8 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 	if(cookUserInfo === undefined){
 			 this.userInfo = {
 				email: "", 
-				pin: ""
+				pin: "", 
+				estimated_time: 50
 			};  
 	}else{
 		this.userInfo = cookUserInfo; 
@@ -40,25 +41,13 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 	/* http requests */
 	/* add the current user to the ueue of the current machine */
 	this.addUserToQueue = function(){
-		/* aprox time */
-		var users_in_queue = this.machine.queue.length; 
-		console.log("AQUI:" + users_in_queue);
-		console.log(this.machine.queue); 
-		if(users_in_queue === undefined){
-			users_in_queue = 0; 
-		}
-		var aprox_time = users_in_queue * 50; 
-		if(aprox_time > 90){
-			aprox_time = 90; /* 24 hours */
-		}
-
 		/* request */
 		var req = $http({
 			method: 'POST', 
 			url: '/machines/'+this.machine.name+'/queue',
 			data: {
 				user: this.userInfo.email,
-				minutes: aprox_time, 
+				minutes: this.userInfo.estimated_time, 
 				pin: this.userInfo.pin, 
 			}
 		});
