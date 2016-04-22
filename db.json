@@ -24,7 +24,9 @@
         }
       ],
       "location": "farsta",
-      "queue_time": 0
+      "queue_time": 0,
+      "problemMessage": "",
+      "operational": true
     },
     {
       "name": "Machine 2i",
