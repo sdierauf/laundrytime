@@ -12,16 +12,13 @@
     {
       "name": "Hurricane Sandy",
       "type": "washer",
-<<<<<<< HEAD
       "location": "farsta",
       "queue": [],
       "operational": true,
       "problemMessage": "",
-=======
       "queue": [],
       "location": "farsta",
       "queue_time": 0,
->>>>>>> 894bb0b5546f357b2c0763c7547b654ff4fd1938
       "activeJob": {}
     },
     {
@@ -79,7 +76,7 @@
       "activeJob": {}
     },
     {
-      "name": "Your Clothes will smell like Onions",
+      "name": "Onion Scented Washer",
       "type": "washer",
       "location": "tyreso",
       "queue": [],
@@ -118,12 +115,10 @@
       "name": "Stale Dale",
       "type": "dryer",
       "location": "lappis",
-<<<<<<< HEAD
       "queue": [],
       "operational": true,
       "problemMessage": "",
-      "activeJob": {}
-=======
+      "activeJob": {},
       "queue_time": 0,
       "activeJob": {
         "user": "sdierauf@gmail.com",
@@ -131,7 +126,6 @@
         "minutes": 47,
         "machineName": "Drying Machine 2i"
       }
->>>>>>> 894bb0b5546f357b2c0763c7547b654ff4fd1938
     }
   ]
 }
