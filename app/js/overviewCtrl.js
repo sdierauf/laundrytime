@@ -120,12 +120,19 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFa
 	}
 
 	$scope.sendToModalFactory = function(machineName){
-		modalFactory.setMachineName(machineName)
-
+		var machine;
+ 		for (var i = 0; i < $scope.currentMachines.length; i++) {
+ 			if ($scope.currentMachines[i].name == machineName) {
+ 				machine = $scope.currentMachines[i];
+ 			}
+ 		}
+		modalFactory.setMachine(machine);
+		console.log('set machine:');
+		console.log(modalFactory.machine);
 		//Unclever way to update queue view 
 		//$scope.togglePersonsList(machineName)
 		//$scope.togglePersonsList(machineName)
-		$scope.getQueueCopy()
+		// $scope.getQueueCopy()
 	}
 
 	$scope.getQueueCopy = function(){

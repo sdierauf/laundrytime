@@ -12,10 +12,16 @@
     {
       "name": "Hurricane Sandy",
       "type": "washer",
+<<<<<<< HEAD
       "location": "farsta",
       "queue": [],
       "operational": true,
       "problemMessage": "",
+=======
+      "queue": [],
+      "location": "farsta",
+      "queue_time": 0,
+>>>>>>> 894bb0b5546f357b2c0763c7547b654ff4fd1938
       "activeJob": {}
     },
     {
@@ -112,10 +118,20 @@
       "name": "Stale Dale",
       "type": "dryer",
       "location": "lappis",
+<<<<<<< HEAD
       "queue": [],
       "operational": true,
       "problemMessage": "",
       "activeJob": {}
+=======
+      "queue_time": 0,
+      "activeJob": {
+        "user": "sdierauf@gmail.com",
+        "pin": 1234,
+        "minutes": 47,
+        "machineName": "Drying Machine 2i"
+      }
+>>>>>>> 894bb0b5546f357b2c0763c7547b654ff4fd1938
     }
   ]
 }

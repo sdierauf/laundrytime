@@ -84,18 +84,18 @@ var createServer = function(port, dbName) {
   }
 
   var scheduleJob = function(job) {
-    api.log('info', 'scheduling job: ' + job);
+    api.log('info', 'scheduling job: ' + JSON.stringify(job));
     activeJobs[job.machineName] = {}
     if (job.minues == 0) {
       finishJob(job);
       return;
     }
     db('machines').find({name: job.machineName}).activeJob = job;
-    var timeout = setTimeout(1000 * 60, function() {
-      api.log('info', 'counting down job: ' + job + ' by one minute');
+    var timeout = setTimeout(function() {
+      api.log('info', 'counting down job: ' + JSON.stringify(job) + ' by one minute');
       job.minutes = job.minutes - 1;
       scheduleJob(job);
-    });
+    }, 1000 * 60);
     activeJobs[job.machineName] = timeout;
   }
 
@@ -282,9 +282,19 @@ var createServer = function(port, dbName) {
   deleteFromQueue.path = '/machines/{machineName}/queue/delete';
   deleteFromQueue.config = {};
   deleteFromQueue.handler = function(req, res) {
+
     var machine = db('machines').find({name: req.params.machineName});
     if (!machine) {
       return res({message: 'machine not found'}).code(404);
+    }
+    var activeJob = machine.activeJob;
+    if (activeJob) {
+      if (activeJob.user == req.payload.user && activeJob.pin == req.payload.pin) {
+        var deleted = activeJob;
+        machine.activeJob = {};
+        activeJobs[req.params.machineName] = {};
+        return res(deleted).code(200);
+      }
     }
     var queue = machine.queue;
     if (queue.length == 0) {
