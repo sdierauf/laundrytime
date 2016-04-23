@@ -1,7 +1,7 @@
 
 
 laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFactory, $http) {
-
+	$scope.queue_times = {}
 
 	$scope.getResidenceName = function() {
 		return $routeParams.res
@@ -19,9 +19,6 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFa
 
 		xmlHttp.send()
 		var all_machines = xmlHttp.responseText
-		//console.log(all_machines)
-
-
 		return all_machines
 	}
 
