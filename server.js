@@ -106,7 +106,8 @@ var createServer = function(port, dbName) {
     // send mail
     var mailForUserPartial = buildEmail("laundrytime-admin@" + mailgun_DOMAIN)(job.user)
     job.mailPartial = mailForUserPartial;
-    scheduleJob(job)
+    db('machines').find({name: job.machineName}).activeJob = job;
+    scheduleJob(job);
     var startedMail = job.mailPartial("Job started")("Your LaundryTime job has been started. PIN: " + job.pin);
     Mailgun.messages().send(startedMail, function(error, body) {
       if (error) {
