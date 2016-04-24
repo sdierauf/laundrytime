@@ -1,6 +1,9 @@
 /* This is needed to no overlap the content */
 body { 
-  padding-top: 2em; 
+}
+
+nav {
+  margin-bottom: 0 !important;
 }
 
 /* Nav bar CSS */

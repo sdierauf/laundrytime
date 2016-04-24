@@ -1,24 +1,24 @@
 <!-- Partial of the residence Overview -->
 <div class="residence">
   <!-- Residence title -->
-  <div class="row">
-    <div class="topBackground" style="height:200px; width:100%;">
+  <div class="row topBackground">
+    <div class="" style="height:200px; width:100%;">
       <h1 style="text-align:center; padding-top:75px;"> {{currentResName}} </h1>
     </div>
   </div>
 
   <!-- Washing machines -->
   <div class="row" style="padding-top:50px">
-    <div class="col-md-3 betterwasher" ng-repeat="machine in currentMachines">
+    <div class="col-sm-3 betterwasher" ng-repeat="machine in currentMachines">
       <div class="row" style="text-align: center;"> <h3> {{machine.name}} </h3> </div>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-6">
           <p style="text-align: center; font-family:verdana;"> Queue: </p>
           <div class="row" id="queue-info">
             <p style="text-align: center"> {{machine.queue.length}}/12 </p>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-sm-6">
           <p style="text-align: center; font-family:verdana;"> Time approx: </p>
           <div class="row" id="queue-info">
             <p style="text-align: center"> {{queue_times[machine.name]}} min </p>
@@ -28,16 +28,16 @@
       <div id="queueView{{machine.name}}"></div>
       <div class="row" style="width: 100%">
         <div ng-show="machine.problemMessage">
-          <div class="col-md-9" style="padding-bottom: 20px">
+          <div class="col-sm-9" style="padding-bottom: 20px">
             <p>Reported Problem: {{machine.problemMessage}}</p>
           </div>
-          <div class="col-md-3">
+          <div class="col-sm-3">
             <button class="btn btn-small" ng-click="fixProblem(machine.name)">fixed!</button>
           </div>
         </div>
       </div>
       <div class="row" style="padding-bottom: 10px">
-        <div class="col-md-12">
+        <div class="col-sm-12">
           <img style="display: block; width: 100%; margin: 0 auto;" src="img/washing_machine_full.jpg">
         </div>
       </div>
