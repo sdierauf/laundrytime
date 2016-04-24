@@ -37,7 +37,12 @@
       "queue": [],
       "operational": true,
       "problemMessage": "",
-      "activeJob": {}
+      "activeJob": {
+        "user": "sdierauf@gmail.com",
+        "pin": 1234,
+        "minutes": 3,
+        "machineName": "The Sahara"
+      }
     },
     {
       "name": "Full Body Wash",
