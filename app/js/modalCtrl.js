@@ -56,23 +56,33 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 		}
 	}
 
+	$scope.getMachineActive = function(){
+		return modalFactory.getMachine().then()(
+			function(obj){
+				modalFactory.setMachineActiveMinutes(obj.data.activeJob)
+			}
+		)
+	}
 	/* GET REQUEST */
 	$scope.getQueue = function(){
+		console.log("getting")
 		return modalFactory.getQueue().then(
 			function(obj){
 				var queue = [];
 				for(var i = 0; i < obj.data.queue.length; i++){
 					queue.push(obj.data.queue[i]);
 				} 
-				modalFactory.setMachineQueue(queue);  
+				modalFactory.setMachineQueue(queue); 
+				$scope.getMacihneActive()
 			}
 				,handleError);
 	}
 
 	$scope.getActiveJobMinutes = function(){
+		console.log("Getting active min")
 		return modalFactory.getAllMachines().then(
 			function(obj){
-				modalFactory.setMachineActiveMinutes(minutes)
+				modalFactory.setMachineActiveMinutes(obj.data.activeJob)
 			})
 	}
 

@@ -111,17 +111,12 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Queue</h4>
           </div>
-<<<<<<< HEAD
-
-=======
           <!-- Active job? -->
->>>>>>> 894bb0b5546f357b2c0763c7547b654ff4fd1938
-          <!-- Body -->
           <div class="modal-body" style="padding:5px 10px;">
               <!-- QUEUE CONTENT -->
             	<div id="queueTable" style="height:300px; overflow-y: scroll;">
-                <p ng-show="modalFactory.machine.activeJobMinutes != 0">
-                  There is a job running for {{modalFactory.machine.activeJobMinutes}} more minutes
+                <p ng-show="modalFactory.machine.activeJob.minutes">
+                  There is a job running for {{modalFactory.machine.activeJob.minutes}} more minutes
                 </p>
                 <table class="table table-striped">
                   <thead>
@@ -228,7 +223,7 @@
           <!-- Footer -->
           <div class="modal-footer">
             <button type="button" class="btn btn-default" style="width: 30%" data-dismiss="modal" data-toggle="modal" data-target="#LineModal" ng-click="close()"> Cancel </button>
-            <button type="button" class="btn btn-danger" style="width: 30%" ng-click="dequeueUser()"> Delete </button>
+            <button type="button" class="btn btn-danger" style="width: 30%" ng-click="dequeueUser()"> Dequeue </button>
           </div>
          </div>
       </div>

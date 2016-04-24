@@ -4,10 +4,22 @@
       "name": "Wet Willy",
       "type": "washer",
       "location": "farsta",
-      "queue": [],
+      "queue": [
+        {
+          "user": "danielr@y.com",
+          "pin": 1234,
+          "minutes": 30,
+          "machineName": "Wet Willy"
+        }
+      ],
       "operational": true,
       "problemMessage": "",
-      "activeJob": {}
+      "activeJob": {
+        "user": "daniel@y.com",
+        "pin": 1234,
+        "minutes": 3,
+        "machineName": "Wet Willy"
+      }
     },
     {
       "name": "Hurricane Sandy",
@@ -58,7 +70,14 @@
       "name": "Dryer Crier",
       "type": "dryer",
       "location": "tyreso",
-      "queue": [],
+      "queue": [
+        {
+          "user": "daniel@y.com",
+          "pin": 1234,
+          "minutes": 20,
+          "machineName": "Dryer Crier"
+        }
+      ],
       "operational": true,
       "problemMessage": "",
       "activeJob": {}

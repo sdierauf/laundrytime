@@ -120,12 +120,14 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 		this.machine.queue = queue; 
 	}
 
-	this.setMachineActiveMinutes = function(min){
-		this.machine.activeJobMinutes = min
+	this.setMachineActiveMinutes = function(activeJob){
+		this.machine.activeJob = activeJob
+		console.log(activeJob)
 	}
 
 	this.setMachineName = function(newName){
-		this.machine.name = newName; 
+		this.machine.name = newName;
+		console.log("cock") 
 	}
 
 	this.setMachine = function(machine) {
