@@ -127,7 +127,6 @@ laundryTimeApp.factory('modalFactory', function($cookieStore, $http) {
 
 	this.setMachineName = function(newName){
 		this.machine.name = newName;
-		console.log("cock") 
 	}
 
 	this.setMachine = function(machine) {

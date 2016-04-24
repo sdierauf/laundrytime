@@ -56,13 +56,6 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 		}
 	}
 
-	$scope.getMachineActive = function(){
-		return modalFactory.getMachine().then()(
-			function(obj){
-				modalFactory.setMachineActiveMinutes(obj.data.activeJob)
-			}
-		)
-	}
 	/* GET REQUEST */
 	$scope.getQueue = function(){
 		console.log("getting")
@@ -72,8 +65,7 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 				for(var i = 0; i < obj.data.queue.length; i++){
 					queue.push(obj.data.queue[i]);
 				} 
-				modalFactory.setMachineQueue(queue); 
-				$scope.getMacihneActive()
+				modalFactory.setMachineQueue(queue);
 			}
 				,handleError);
 	}
@@ -185,7 +177,6 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 					$('#DequeueModal').modal('hide'); 
 					$scope.userToBeDeleted.pin = "";
 					modalFactory.setErrorText("");
-					window.alert("User dequeued successfully.");
 				},handleError); 
 		}
 	}

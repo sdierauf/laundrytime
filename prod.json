@@ -17,7 +17,7 @@
       "activeJob": {
         "user": "daniel@y.com",
         "pin": 1234,
-        "minutes": 3,
+        "minutes": -18,
         "machineName": "Wet Willy"
       }
     },
@@ -37,12 +37,7 @@
       "queue": [],
       "operational": true,
       "problemMessage": "",
-      "activeJob": {
-        "user": "sdierauf@gmail.com",
-        "pin": 1234,
-        "minutes": 3,
-        "machineName": "The Sahara"
-      }
+      "activeJob": {}
     },
     {
       "name": "Full Body Wash",
@@ -121,7 +116,12 @@
       "queue": [],
       "operational": true,
       "problemMessage": "",
-      "activeJob": {}
+      "activeJob": {
+        "user": "danielr@y.com",
+        "pin": 1234,
+        "minutes": 27,
+        "machineName": "Wetter Getter"
+      }
     },
     {
       "name": "Dapper Damper",
@@ -130,7 +130,12 @@
       "queue": [],
       "operational": true,
       "problemMessage": "",
-      "activeJob": {}
+      "activeJob": {
+        "user": "danielenriquecarballal@gmail.com",
+        "pin": 1234,
+        "minutes": 1,
+        "machineName": "Dapper Damper"
+      }
     },
     {
       "name": "Stale Dale",
