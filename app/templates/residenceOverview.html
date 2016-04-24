@@ -50,12 +50,12 @@
       <div class="row">
         <button class="btn btn-success" style="width: 100%"
         data-toggle="modal" data-target="#LoginModal"
-        ng-click="sendToModalFactory(machine.name)">Get in line</button>
+        ng-click="sendToModalFactory(machine.name, machine.activeJob)">Get in line</button>
       </div>
       <div class="row">
         <button class="btn btn-warning" style="width: 100%"
         data-toggle="modal" data-target="#LineModal"
-        ng-click="sendToModalFactory(machine.name)">See the queue</button>
+        ng-click="sendToModalFactory(machine.name, machine.activeJob)">See the queue</button>
       </div>
       <div class="row">
         <button class="btn btn-danger" style="width: 100%" 

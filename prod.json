@@ -13,17 +13,15 @@
       "name": "Hurricane Sandy",
       "type": "washer",
       "location": "farsta",
-      "queue": [
-        {
-          "user": "sdierauf@hotmail.com",
-          "pin": 9999,
-          "minutes": 50,
-          "machineName": "Hurricane Sandy"
-        }
-      ],
+      "queue": [],
       "operational": true,
       "problemMessage": "",
-      "activeJob": {}
+      "activeJob": {
+        "user": "sdierauf@hotmail.com",
+        "pin": 9999,
+        "minutes": 48,
+        "machineName": "Hurricane Sandy"
+      }
     },
     {
       "name": "The Sahara",

@@ -25,12 +25,16 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFa
 	$scope.currentMachines = []
 
 	var setCurrentMachines = function(data){
-		$scope.currentMachines = [];
+		$scope.currentMachines = []
 		for(i = 0; i < data.length; i++){
 			machine = data[i]
 			if(machine['location'] == $scope.currentResName.toLowerCase()){
 				$scope.currentMachines.push(machine)
-				console.log(machine)
+				var sum = 0
+				for(j = 0; j < machine.queue.length; j ++){
+					sum += machine.queue[j].minutes
+				}
+				$scope.queue_times[machine.name] = sum
 			}
 			
 		}
@@ -135,20 +139,14 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFa
 		}
 	}
 
-	$scope.sendToModalFactory = function(machineName){
-		var machine;
- 		for (var i = 0; i < $scope.currentMachines.length; i++) {
- 			if ($scope.currentMachines[i].name == machineName) {
- 				machine = $scope.currentMachines[i];
- 			}
- 		}
-		modalFactory.setMachine(machine);
-		console.log('set machine:');
-		console.log(modalFactory.machine);
+	$scope.sendToModalFactory = function(machineName, activeJob){
+		modalFactory.setMachineName(machineName)
+		modalFactory.setMachineActiveMinutes(activeJob)
+
 		//Unclever way to update queue view 
 		//$scope.togglePersonsList(machineName)
 		//$scope.togglePersonsList(machineName)
-		// $scope.getQueueCopy()
+		$scope.getQueueCopy()
 	}
 
 	$scope.getQueueCopy = function(){

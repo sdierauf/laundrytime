@@ -58,21 +58,23 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 
 	/* GET REQUEST */
 	$scope.getQueue = function(){
+		console.log("getting")
 		return modalFactory.getQueue().then(
 			function(obj){
 				var queue = [];
 				for(var i = 0; i < obj.data.queue.length; i++){
 					queue.push(obj.data.queue[i]);
 				} 
-				modalFactory.setMachineQueue(queue);  
+				modalFactory.setMachineQueue(queue);
 			}
 				,handleError);
 	}
 
 	$scope.getActiveJobMinutes = function(){
+		console.log("Getting active min")
 		return modalFactory.getAllMachines().then(
 			function(obj){
-				modalFactory.setMachineActiveMinutes(minutes)
+				modalFactory.setMachineActiveMinutes(obj.data.activeJob)
 			})
 	}
 
@@ -175,7 +177,6 @@ laundryTimeApp.controller('modalCtrl', function($scope, modalFactory) {
 					$('#DequeueModal').modal('hide'); 
 					$scope.userToBeDeleted.pin = "";
 					modalFactory.setErrorText("");
-					window.alert("User dequeued successfully.");
 				},handleError); 
 		}
 	}
