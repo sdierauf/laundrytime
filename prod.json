@@ -13,7 +13,14 @@
       "name": "Hurricane Sandy",
       "type": "washer",
       "location": "farsta",
-      "queue": [],
+      "queue": [
+        {
+          "user": "sdierauf@hotmail.com",
+          "pin": 9999,
+          "minutes": 50,
+          "machineName": "Hurricane Sandy"
+        }
+      ],
       "operational": true,
       "problemMessage": "",
       "activeJob": {}
@@ -22,13 +29,20 @@
       "name": "The Sahara",
       "type": "dryer",
       "location": "farsta",
-      "queue": [],
+      "queue": [
+        {
+          "user": "sdierauf@hotmail.com",
+          "pin": 1234,
+          "minutes": 50,
+          "machineName": "The Sahara"
+        }
+      ],
       "operational": true,
       "problemMessage": "",
       "activeJob": {
         "user": "sdierauf@gmail.com",
         "pin": 1234,
-        "minutes": 3,
+        "minutes": 0,
         "machineName": "The Sahara"
       }
     },

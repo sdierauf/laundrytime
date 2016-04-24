@@ -86,7 +86,7 @@ var createServer = function(port, dbName) {
   var scheduleJob = function(job) {
     api.log('info', 'scheduling job: ' + JSON.stringify(job));
     activeJobs[job.machineName] = {}
-    if (job.minues == 0) {
+    if (job.minutes <= 0) {
       finishJob(job);
       return;
     }

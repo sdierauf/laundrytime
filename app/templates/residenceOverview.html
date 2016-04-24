@@ -11,6 +11,12 @@
   <div class="row" style="padding-top:50px">
     <div class="col-sm-3 betterwasher" ng-repeat="machine in currentMachines">
       <div class="row" style="text-align: center;"> <h3> {{machine.name}} </h3> </div>
+      <div class="row" ng-show="machine.activeJob && machine.activeJob.minutes" style="text-align: center;">
+        <p>In use!</p>
+      </div>
+      <div class="row" ng-show="!(machine.activeJob && machine.activeJob.minutes) && machine.queue.length > 0" style="text-align: center;">
+        <p>Waiting for next user to dequeue...</p>
+      </div>
       <div class="row">
         <div class="col-sm-6">
           <p style="text-align: center; font-family:verdana;"> Queue: </p>
@@ -21,7 +27,7 @@
         <div class="col-sm-6">
           <p style="text-align: center; font-family:verdana;"> Time approx: </p>
           <div class="row" id="queue-info">
-            <p style="text-align: center"> {{machine.queue_time}} min </p>
+            <p style="text-align: center"> {{getQueueTime(machine)}} min </p>
           </div>
         </div>
       </div>

@@ -37,6 +37,22 @@ laundryTimeApp.controller('overviewCtrl', function ($scope,$routeParams, modalFa
 		$scope.$apply();
 	}
 
+	$scope.getQueueTime = function(machine) {
+		var ret = 0;
+		if (machine.activeJob && machine.activeJob.minutes) {
+			ret = machine.activeJob.minutes;
+		}
+		if (!machine) { return }
+		for (var i = 0; i < machine.queue.length; i++) {
+			ret += machine.queue[i].minutes;
+		}
+		return ret;
+	}
+
+	$scope.fuck = function() {
+		return 5;
+	}
+
 	$scope.getAllMachinesFromResidence = function() {
 		var xmlHttp = new XMLHttpRequest()
 		xmlHttp.open( "GET", "/machines", true ) //Async set to false
