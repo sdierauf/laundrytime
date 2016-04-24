@@ -16,33 +16,16 @@
       "queue": [],
       "operational": true,
       "problemMessage": "",
-      "activeJob": {
-        "user": "sdierauf@hotmail.com",
-        "pin": 9999,
-        "minutes": 48,
-        "machineName": "Hurricane Sandy"
-      }
+      "activeJob": {}
     },
     {
       "name": "The Sahara",
       "type": "dryer",
       "location": "farsta",
-      "queue": [
-        {
-          "user": "sdierauf@hotmail.com",
-          "pin": 1234,
-          "minutes": 50,
-          "machineName": "The Sahara"
-        }
-      ],
+      "queue": [],
       "operational": true,
       "problemMessage": "",
-      "activeJob": {
-        "user": "sdierauf@gmail.com",
-        "pin": 1234,
-        "minutes": 0,
-        "machineName": "The Sahara"
-      }
+      "activeJob": {}
     },
     {
       "name": "Full Body Wash",
